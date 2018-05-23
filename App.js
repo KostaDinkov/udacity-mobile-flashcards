@@ -7,7 +7,9 @@ import DeckList from './components/DeckList';
 import {importData} from './actions/index';
 import {fetchAllData} from './api/data';
 import {createStackNavigator} from 'react-navigation';
-import DeckDetails from './components/DeckDetails'
+import DeckDetails from './components/DeckDetails';
+import DeckPractice from './components/DeckPractice';
+import AddQuestion from './components/AddQuestion';
 
 const store = createStore(reducer);
 store.dispatch(importData(fetchAllData()));
@@ -19,6 +21,12 @@ const RootStack = createStackNavigator({
   DeckDetails: {
     screen: DeckDetails
   },
+  DeckPractice:{
+    screen:DeckPractice
+  },
+  AddQuestion:{
+    screen:AddQuestion
+  }
 
 },{
   initialrouteName: 'Home'
@@ -39,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ddd',
-    alignItems: 'stretch',
+    alignItems: 'center',
     justifyContent: 'center'
   }
 });

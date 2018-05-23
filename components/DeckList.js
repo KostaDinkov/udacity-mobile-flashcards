@@ -1,5 +1,5 @@
 import React from 'react';
-import {ToastAndroid,View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {connect} from 'react-redux';
 
 
@@ -10,7 +10,7 @@ class DeckList extends React.Component {
   };
 
   render() {
-    debugger;
+
 
     const { decks } = this.props.store;
     return (
