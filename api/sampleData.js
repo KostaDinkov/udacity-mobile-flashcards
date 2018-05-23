@@ -4,6 +4,11 @@ export default  {
       name:'Do you know Redux?',
       cards:['cid1','cid2'],
       dateCreated:'dateTime'
+    },
+    'did2':{
+      name:'Redux Advanced.',
+      cards:['cid3','cid4', 'cid5','cid6'],
+      dateCreated:'dateTime'
     }
 
   },
@@ -14,19 +19,19 @@ export default  {
       options:[
         {
           text:'connect',
-          isCorrect:'true'
+          isCorrect:true
         },
         {
           text:'mapDispatchToProps',
-          isCorrect:'false'
+          isCorrect:false
         },
         {
           text:'Middleware',
-          isCorrect:'false'
+          isCorrect:false
         },
         {
           text:'connect()',
-          isCorrect:'true'
+          isCorrect:true
         }
       ]
     },
@@ -36,15 +41,69 @@ export default  {
       options:[
         {
           text:'Through the Provider',
-          isCorrect:'true'
+          isCorrect:true
         },
         {
           text:'import the Provider component from the react-redux package and wrap our root component within.',
-          isCorrect:'true'
+          isCorrect:true
         },
         {
           text:'Middleware',
-          isCorrect:'false'
+          isCorrect:false
+        }
+      ]
+    },
+    'cid3':{
+      multipleChoice:true,
+      question:"Question three",
+      options:[
+        {
+          text:'Correct option',
+          isCorrect:true
+        },
+        {
+          text:'Correct option',
+          isCorrect:true
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        }
+      ]
+    },
+    'cid4':{
+      multipleChoice:false,
+      question:"Question four?",
+      options:[
+        {
+          text:'Correct option.',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option.',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        }
+      ]
+    },
+    'cid5':{
+      multipleChoice:false,
+      question:"Question five?",
+      options:[
+        {
+          text:'Correct option.',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option.',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
         }
       ]
     }

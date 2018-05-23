@@ -1,32 +1,55 @@
 import React from 'react';
-import {View,Text} from 'react-native';
-import {connect} from 'react-redux'
+import {ToastAndroid,View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {connect} from 'react-redux';
 
 
-class DeckList extends React.Component{
+class DeckList extends React.Component {
 
+  static navigationOptions={
+    title:'Home'
+  };
 
-  render(){
+  render() {
     debugger;
 
-    const {decks} = this.props.store;
+    const { decks } = this.props.store;
     return (
-      <View>
+      <View style={styles.container}>
         <Text>Available Decks:</Text>
-        {Object.keys(decks).map(id=>(
-          <View key = {id}>
-            <Text>{decks[id].name}</Text>
-            <Text>Questions:{decks[id].cards.length}</Text>
-          </View>
+        {Object.keys(decks).map(id => (
+          <TouchableNativeFeedback
+            key={id}
+            onPress={()=> this.props.navigation.navigate('DeckDetails',{deck:decks[id]})}
+          >
+            <View style={styles.deckItem}>
+              <Text>{decks[id].name}</Text>
+              <Text>Cards:{decks[id].cards.length}</Text>
+            </View>
+          </TouchableNativeFeedback>
         ))}
       </View>
-    )
+    );
   }
 }
 
-function mapStateToProps(store){
-  return {store};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'stretch',
+    justifyContent: 'center'
+  },
+  deckItem: {
+    backgroundColor: '#ccc',
+    padding: 2,
+    margin: 2
+  }
+});
+
+function mapStateToProps(store) {
+  return { store };
 }
+
 export default connect(mapStateToProps)(DeckList);
 
 
