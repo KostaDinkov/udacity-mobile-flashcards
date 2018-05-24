@@ -104,7 +104,55 @@ export default  {
         {
           text:'Incorrect option',
           isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },
+        {
+          text:'Incorrect option',
+          isCorrect:false
+        },{
+          text:'Incorrect option',
+          isCorrect:false
         }
+
       ]
     }
   },

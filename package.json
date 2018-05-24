@@ -20,10 +20,12 @@
   },
   "dependencies": {
     "expo": "^27.0.1",
+    "prop-types": "^15.6.1",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-elements": "^0.19.1",
     "react-native-flip-card": "^3.5.2",
+    "react-native-flip-component": "^1.0.5",
     "react-native-pages": "^0.7.0",
     "react-navigation": "^2.0.1",
     "react-redux": "^5.0.7",

@@ -10,13 +10,14 @@ class AddQuestion extends React.Component {
     const deck = this.props.navigation.getParam('deck');
     const cards = this.props.cards;
     return (
-        <View style={{flex:1}}>
-          <Text>{deck.name}</Text>
-        <Pages>
-          <Card card={cards['cid1']} />
-          <Card card={cards['cid2']} />
+      <View style={{ flex:1} }>
+
+        <Pages indicatorPosition='top' containerStyle={{flex:1,justifyContent:'center'}}>
+          {Object.keys(cards).map(cid => (
+            <Card  key={cid} card={cards[cid]}/>
+          ))}
         </Pages>
-        </View>
+      </View>
     );
   }
 }
