@@ -1,11 +1,13 @@
 export default  {
   decks:{
     'did1':{
+      id:'did1',
       name:'Do you know Redux?',
       cards:['cid1','cid2'],
       dateCreated:'dateTime'
     },
     'did2':{
+      id:'did2',
       name:'Redux Advanced.',
       cards:['cid3','cid4', 'cid5','cid6'],
       dateCreated:'dateTime'
@@ -14,6 +16,7 @@ export default  {
   },
   cards:{
     'cid1':{
+      id:'cid1',
       multipleChoice:true,
       question:"What function hooks together the Redux states and Smart Components(in react)?",
       options:[
@@ -36,6 +39,7 @@ export default  {
       ]
     },
     'cid2':{
+      id:'cid2',
       multipleChoice:true,
       question:"How do you use React and Redux together?",
       options:[
@@ -54,6 +58,7 @@ export default  {
       ]
     },
     'cid3':{
+      id:'cid3',
       multipleChoice:true,
       question:"Question three",
       options:[
@@ -72,6 +77,7 @@ export default  {
       ]
     },
     'cid4':{
+      id:'cid4',
       multipleChoice:false,
       question:"Question four?",
       options:[
@@ -90,6 +96,7 @@ export default  {
       ]
     },
     'cid5':{
+      id:'cid5',
       multipleChoice:false,
       question:"Question five?",
       options:[
@@ -157,6 +164,6 @@ export default  {
     }
   },
   scores:{
-    'deckId':'score'
+
   }
 };

@@ -1,40 +1,69 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {View, Text, ScrollView, StyleSheet, Easing, TouchableOpacity, Button} from 'react-native';
 import FlipView from './FlipView';
-
+import {addQuestionScore} from '../actions';
 import {CheckBox} from 'react-native-elements';
+import {toggleCheckBox} from '../actions';
 
-export default class Card extends React.Component {
-
+class Card extends React.Component {
   state = {
-    isFlipped: false
+    isFlipped: false,
   };
 
+
+  handleSubmit(card){
+    const isCorrect = this.checkAnswers(card);
+    console.log(isCorrect);
+    this.props.dispatch(addQuestionScore(this.props.deck.id,card.id,isCorrect));
+  }
+
+
+  checkAnswers(card){
+
+    for(let i=0; i<card.options.length;i++){
+      if(!(card.options[i].isCorrect === this.state['check'+i])){
+        return false;
+      }
+    }
+    return true;
+  }
+
   cardFront(card) {
+
     return (
       <View style={styles.cardFront}>
         <View style={styles.top}>
           <Text>{card.question}</Text>
           <ScrollView>
             {card.options.map((o, i) => (
-              <CheckBox key={i} title={o.text} containerStyle={{marginHorizontal:0}}/>
+              <CheckBox
+                key={'check'+i}
+                title={o.text}
+                containerStyle={{marginHorizontal:0}}
+                checked = {this.props.activeDeck[card.id][i]}
+                onPress={()=>{
+                  this.props.dispatch(toggleCheckBox(card.id,i));
+                  console.log(this.props.activeDeck)
+
+                }}
+              />
             ))}
           </ScrollView>
         </View>
 
         <View style={styles.bottom}>
-          <Button title={'SUBMIT'} onPress={() => {
-          }}/>
+          <Button title={'SUBMIT'} onPress={()=>this.handleSubmit(card)}/>
           <TouchableOpacity onPress={() => this.setState({ isFlipped: !this.state.isFlipped })}>
             <Text style={styles.textButton}>Flip</Text>
           </TouchableOpacity>
         </View>
       </View>
-
     );
   }
 
   cardBack(card) {
+
     return (
       <View style={styles.cardFront}>
         <View style={styles.top}>
@@ -106,3 +135,7 @@ const styles = StyleSheet.create({
   }
 
 });
+function mapStateToProps({scores, activeDeck}){
+  return {scores, activeDeck};
+}
+export default connect(mapStateToProps)(Card);

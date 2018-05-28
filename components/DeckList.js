@@ -8,9 +8,10 @@ class DeckList extends React.Component {
   static navigationOptions={
     title:'Home'
   };
-
+  componentWillMount(){
+    console.log(this.props.store)
+  }
   render() {
-
 
     const { decks } = this.props.store;
     return (
