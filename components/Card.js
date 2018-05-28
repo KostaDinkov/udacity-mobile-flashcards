@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {View, Text, ScrollView, StyleSheet, Easing, TouchableOpacity, Button} from 'react-native';
 import FlipView from './FlipView';
-import {addQuestionScore} from '../actions';
 import {CheckBox} from 'react-native-elements';
 import {toggleCheckBox} from '../actions';
 
@@ -11,26 +10,7 @@ class Card extends React.Component {
     isFlipped: false,
   };
 
-
-  handleSubmit(card){
-    const isCorrect = this.checkAnswers(card);
-    console.log(isCorrect);
-    this.props.dispatch(addQuestionScore(this.props.deck.id,card.id,isCorrect));
-  }
-
-
-  checkAnswers(card){
-
-    for(let i=0; i<card.options.length;i++){
-      if(!(card.options[i].isCorrect === this.state['check'+i])){
-        return false;
-      }
-    }
-    return true;
-  }
-
   cardFront(card) {
-
     return (
       <View style={styles.cardFront}>
         <View style={styles.top}>
@@ -53,7 +33,7 @@ class Card extends React.Component {
         </View>
 
         <View style={styles.bottom}>
-          <Button title={'SUBMIT'} onPress={()=>this.handleSubmit(card)}/>
+
           <TouchableOpacity onPress={() => this.setState({ isFlipped: !this.state.isFlipped })}>
             <Text style={styles.textButton}>Flip</Text>
           </TouchableOpacity>
