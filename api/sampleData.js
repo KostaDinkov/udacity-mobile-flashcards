@@ -9,7 +9,7 @@ export default  {
     'did2':{
       id:'did2',
       name:'Redux Advanced.',
-      cards:['cid3','cid4', 'cid5','cid6'],
+      cards:['cid3','cid4', 'cid5'],
       dateCreated:'dateTime'
     }
 

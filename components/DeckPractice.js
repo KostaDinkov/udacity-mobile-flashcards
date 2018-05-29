@@ -9,13 +9,18 @@ import {Button} from 'react-native-elements';
 class AddQuestion extends React.Component {
 
   componentWillMount() {
-
     const cards = this.props.deckCards;
-    this.props.dispatch(initActiveDeck(cards));
+    const deck = this.props.deck;
+    this.props.dispatch(initActiveDeck(cards,deck));
+    //create the scores entry
+  }
+
+  handleSubmit(){
+    this.props.navigation.navigate('QuizResults');
   }
 
   render() {
-    const deck = this.props.navigation.getParam('deck');
+    const deck = this.props.deck;
     const cards = this.props.deckCards;
     return (
       <View style={{ flex: 1 }}>
@@ -31,8 +36,7 @@ class AddQuestion extends React.Component {
             borderRadius={3}
             backgroundColor={'#2296F3'}
             title={'SUBMIT'}
-            onPress={() => {
-            }}/>
+            onPress={() => this.handleSubmit()}/>
         </View>
       </View>
     );
@@ -44,7 +48,7 @@ function mapStateToProps({ cards }, ownProps) {
   const deckCards = Object.keys(cards)
                           .filter(c => deck.cards.includes(c))
                           .map(c => cards[c]);
-  return { deckCards, cards };
+  return { deckCards, deck };
 }
 
 export default connect(mapStateToProps)(AddQuestion);

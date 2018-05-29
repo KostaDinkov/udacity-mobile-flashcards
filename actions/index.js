@@ -15,14 +15,18 @@ export function addQuestionScore(deckId,cid,isCorrect){
     type:ADD_QUESTION_SCORE,
     deckId,
     cid,
-    isCorrect
+    isCorrect: shouldBeChecked
   }
 }
 
-export function initActiveDeck(cards){
+export function initActiveDeck(cards, deck){
 
   const activeDeck = {};
-  cards.forEach(card=>activeDeck[card.id]=Object.assign({},card.options.map(()=>false)));
+  activeDeck.cards = cards;
+  activeDeck.answers = {};
+  //TODO make more readable
+  cards.forEach(card=>activeDeck.answers[card.id]=Object.assign({},card.options.map((o)=>({isChecked:false,shouldBeChecked:o.isCorrect}))));
+
   return{
     type:INIT_ACTIVE_DECK,
     activeDeck,

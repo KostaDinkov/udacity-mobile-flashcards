@@ -7,10 +7,15 @@ import {toggleCheckBox} from '../actions';
 
 class Card extends React.Component {
   state = {
-    isFlipped: false,
+    isFlipped: false
   };
 
+  componentDidUpdate(){
+    console.log('Active Deck: \n',this.props.activeDeck);
+  }
+
   cardFront(card) {
+
     return (
       <View style={styles.cardFront}>
         <View style={styles.top}>
@@ -18,14 +23,12 @@ class Card extends React.Component {
           <ScrollView>
             {card.options.map((o, i) => (
               <CheckBox
-                key={'check'+i}
+                key={'check' + i}
                 title={o.text}
-                containerStyle={{marginHorizontal:0}}
-                checked = {this.props.activeDeck[card.id][i]}
-                onPress={()=>{
-                  this.props.dispatch(toggleCheckBox(card.id,i));
-                  console.log(this.props.activeDeck)
-
+                containerStyle={{ marginHorizontal: 0 }}
+                checked={this.props.activeDeck.answers[card.id][i].isChecked}
+                onPress={() => {
+                  this.props.dispatch(toggleCheckBox(card.id, i));
                 }}
               />
             ))}
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor:'#fff'
+    backgroundColor: '#fff'
   },
   textButton: {
     textAlign: 'center'
@@ -115,7 +118,9 @@ const styles = StyleSheet.create({
   }
 
 });
-function mapStateToProps({scores, activeDeck}){
-  return {scores, activeDeck};
+
+function mapStateToProps({ scores, activeDeck }) {
+  return { scores, activeDeck };
 }
+
 export default connect(mapStateToProps)(Card);
