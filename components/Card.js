@@ -9,11 +9,6 @@ class Card extends React.Component {
   state = {
     isFlipped: false
   };
-
-  componentDidUpdate(){
-    console.log('Active Deck: \n',this.props.activeDeck);
-  }
-
   cardFront(card) {
 
     return (

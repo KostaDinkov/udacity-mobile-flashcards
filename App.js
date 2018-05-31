@@ -7,8 +7,9 @@ import {fetchAllData} from './api/data';
 import {createStackNavigator} from 'react-navigation';
 import DeckDetails from './components/DeckDetails';
 import DeckPractice from './components/DeckPractice';
-import AddQuestion from './components/AddQuestion';
+import AddQuestion from './components/AddNewCard';
 import QuizResults from './components/QuizResults'
+import CreateNewDeck from './components/CreateNewDeck'
 
 const store = createStore(reducer,fetchAllData());
 const RootStack = createStackNavigator({
@@ -26,6 +27,9 @@ const RootStack = createStackNavigator({
   },
   QuizResults:{
     screen:QuizResults
+  },
+  CreateNewDeck:{
+    screen:CreateNewDeck
   }
 
 },{

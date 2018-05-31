@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {Button} from 'react-native-elements'
 import {connect} from 'react-redux';
+
 
 
 class DeckList extends React.Component {
@@ -8,9 +10,8 @@ class DeckList extends React.Component {
   static navigationOptions={
     title:'Home'
   };
-  componentWillMount(){
-    console.log(this.props.store)
-  }
+
+
   render() {
 
     const { decks } = this.props.store;
@@ -20,14 +21,16 @@ class DeckList extends React.Component {
         {Object.keys(decks).map(id => (
           <TouchableNativeFeedback
             key={id}
-            onPress={()=> this.props.navigation.navigate('DeckDetails',{deck:decks[id]})}
+            onPress={()=> this.props.navigation.navigate('DeckDetails',{deck:id})}
           >
             <View style={styles.deckItem}>
               <Text>{decks[id].name}</Text>
               <Text>Cards:{decks[id].cards.length}</Text>
             </View>
           </TouchableNativeFeedback>
+
         ))}
+        <Button title='Create New Deck' onPress={()=>this.props.navigation.navigate('CreateNewDeck')}/>
       </View>
     );
   }

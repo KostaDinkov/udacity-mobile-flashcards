@@ -27,6 +27,7 @@
     "react-native-flip-card": "^3.5.2",
     "react-native-flip-component": "^1.0.5",
     "react-native-pages": "^0.7.0",
+    "react-native-simple-toast": "^0.0.8",
     "react-navigation": "^2.0.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0"

@@ -1,20 +1,9 @@
 import {ADD_QUESTION_SCORE, CREATE_DECK_SCORES, INIT_ACTIVE_DECK, TOGGLE_CHECKBOX} from '../actions';
 import {combineReducers} from 'redux';
 import React from 'react';
+import decks from './decks'
+import cards from './cards'
 
-export function decks(state = {}, action) {
-  switch (action.type) {
-    default:
-      return state;
-  }
-}
-
-export function cards(state = {}, action) {
-  switch (action.type) {
-    default:
-      return state;
-  }
-}
 
 export function activeDeck(state = {}, action) {
 
