@@ -3,11 +3,12 @@ import {View, Text, StyleSheet, TouchableNativeFeedback,ScrollView} from 'react-
 import {Button, Icon, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {deleteDeck} from '../actions/decks';
+import * as colors from '../util/colors'
 
 class DeckList extends React.Component {
 
   static navigationOptions = {
-    title: 'Home'
+    title: 'Mobile Flashcards'
   };
 
   handleDeleteDeck(id){
@@ -16,7 +17,7 @@ class DeckList extends React.Component {
   }
 
   render() {
-    debugger;
+
     const decks = this.props.decks;
     return (
       <View style={styles.container}>
@@ -27,7 +28,7 @@ class DeckList extends React.Component {
               key={id}
               rightIcon={<Icon
                 size={22}
-                color={'#bc1d0d'}
+                color={colors.error}
                 name={'delete'}
                 raised
                 onPress={()=>this.handleDeleteDeck(id)}

@@ -16,7 +16,7 @@ export function decks(state = initialData, action) {
         }
       };
     case DELETE_DECK:
-      debugger;
+
       let {[action.deckId]:value, ...filtered} = state;
       return {
         ...filtered

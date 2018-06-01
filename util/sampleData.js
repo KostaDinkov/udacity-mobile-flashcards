@@ -22,19 +22,19 @@ export default  {
       options:[
         {
           text:'connect',
-          isCorrect:true
+          answer:true
         },
         {
           text:'mapDispatchToProps',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Middleware',
-          isCorrect:false
+          answer:false
         },
         {
           text:'connect()',
-          isCorrect:true
+          answer:true
         }
       ]
     },
@@ -45,15 +45,15 @@ export default  {
       options:[
         {
           text:'Through the Provider',
-          isCorrect:true
+          answer:true
         },
         {
           text:'import the Provider component from the react-redux package and wrap our root component within.',
-          isCorrect:true
+          answer:true
         },
         {
           text:'Middleware',
-          isCorrect:false
+          answer:false
         }
       ]
     },
@@ -64,15 +64,15 @@ export default  {
       options:[
         {
           text:'Correct option',
-          isCorrect:true
+          answer:true
         },
         {
           text:'Correct option',
-          isCorrect:true
+          answer:true
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         }
       ]
     },
@@ -83,15 +83,15 @@ export default  {
       options:[
         {
           text:'Correct option.',
-          isCorrect:false
+          answer:true
         },
         {
           text:'Incorrect option.',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         }
       ]
     },
@@ -102,62 +102,62 @@ export default  {
       options:[
         {
           text:'Correct option.',
-          isCorrect:false
+          answer:true
         },
         {
           text:'Incorrect option.',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },
         {
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         },{
           text:'Incorrect option',
-          isCorrect:false
+          answer:false
         }
 
       ]

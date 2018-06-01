@@ -9,6 +9,7 @@ import rootReducer from '../reducers';
 const persistConfig = {
   key: 'root',
   storage: storage,
+  whitelist:['decks','cards'],
   stateReconciler: autoMergeLevel2
 };
 

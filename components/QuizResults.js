@@ -42,7 +42,7 @@ class QuizResults extends React.Component {
   render() {
 
     const answers = this.props.activeDeck.answers;
-    debugger;
+
 
     return (
       <View>

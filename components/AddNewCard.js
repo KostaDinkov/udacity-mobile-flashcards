@@ -10,7 +10,7 @@ import {addCard} from '../actions/decks';
 class AddNewCard extends React.Component {
   state = {
     question: '',
-    options: [{text:'',isCorrect:false},{text:'',isCorrect:false}]
+    options: [{text:'',answer:false},{text:'',answer:false}]
   };
 
   updateOptionText(i, optionText) {
@@ -22,13 +22,13 @@ class AddNewCard extends React.Component {
 
   toggleOptionCorrect(i) {
     let options = this.state.options;
-    options[i] = { ...options[i], isCorrect: !options[i].isCorrect };
+    options[i] = { ...options[i], answer: !options[i].isCorrect };
     this.setState({ options });
   }
 
   addOption() {
-    debugger;
-    this.setState({ options: [...this.state.options, { text: '', isCorrect: false }] });
+
+    this.setState({ options: [...this.state.options, { text: '', answer: false }] });
   }
 
   removeOption(i){
@@ -60,7 +60,7 @@ class AddNewCard extends React.Component {
     if(card.question ===''){
       return 'Question text may not be empty!';
     }
-    else if (card.options.filter(o => o.isCorrect).length < 1){
+    else if (card.options.filter(o => o.answer).length < 1){
       return 'There must be at least one correct option'
     }
     else if (card.options.some(o=>o.text === '')){

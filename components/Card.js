@@ -1,40 +1,58 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View, Text, ScrollView, StyleSheet, Easing, TouchableOpacity, Button} from 'react-native';
+import {View, StyleSheet, Easing, TouchableOpacity} from 'react-native';
 import FlipView from './FlipView';
-import {CheckBox} from 'react-native-elements';
-import {toggleCheckBox} from '../actions';
+import {Text, Button, Divider} from 'react-native-elements';
+import * as colors from '../util/colors';
+import {setAnswerToCorrect} from '../actions';
+
+const FlipButton = (props) => (
+  <Button
+    title='Flip'
+    clear
+    titleStyle={{
+      color: colors.secondaryText
+    }}
+    buttonStyle={[
+      styles.roundClearBtn,
+      { borderColor: colors.secondaryText }
+    ]}
+    onPress={() => props.toggle()}>
+  </Button>
+
+);
 
 class Card extends React.Component {
   state = {
-    isFlipped: false
+    isFlipped: false,
+    answer: 'not answered'
   };
+
+  toggleCorrect(result) {
+
+    const cardId = this.props.card.id;
+
+    this.setState({
+      answer: result
+    });
+    if (result === 'correct') {
+      this.props.dispatch(setAnswerToCorrect(cardId));
+    }
+
+  }
+
+  toggleFlip() {
+    this.setState({ isFlipped: !this.state.isFlipped });
+  }
+
   cardFront(card) {
-
     return (
-      <View style={styles.cardFront}>
+      <View style={styles.cardContainer}>
         <View style={styles.top}>
-          <Text>{card.question}</Text>
-          <ScrollView>
-            {card.options.map((o, i) => (
-              <CheckBox
-                key={'check' + i}
-                title={o.text}
-                containerStyle={{ marginHorizontal: 0 }}
-                checked={this.props.activeDeck.answers[card.id][i].isChecked}
-                onPress={() => {
-                  this.props.dispatch(toggleCheckBox(card.id, i));
-                }}
-              />
-            ))}
-          </ScrollView>
+          <Text h3>{card.question}</Text>
         </View>
-
         <View style={styles.bottom}>
-
-          <TouchableOpacity onPress={() => this.setState({ isFlipped: !this.state.isFlipped })}>
-            <Text style={styles.textButton}>Flip</Text>
-          </TouchableOpacity>
+          <FlipButton toggle={this.toggleFlip.bind(this)}/>
         </View>
       </View>
     );
@@ -43,22 +61,50 @@ class Card extends React.Component {
   cardBack(card) {
 
     return (
-      <View style={styles.cardFront}>
+      <View style={styles.cardContainer}>
         <View style={styles.top}>
-          <Text>{card.question}</Text>
+          <Text h4>{card.question}</Text>
+          <Divider/>
           <Text>Correct answers:</Text>
           {card.options.map((o, i) => {
-            if (o.isCorrect) {
+            if (o.answer) {
               return (
                 <Text key={i}>{o.text}</Text>
               );
             }
           })}
         </View>
+
         <View style={styles.bottom}>
-          <TouchableOpacity onPress={() => this.setState({ isFlipped: !this.state.isFlipped })}>
-            <Text style={styles.textButton}>Flip</Text>
-          </TouchableOpacity>
+          <Text style={{ textAlign: 'center' }}>Was your guess correct or incorrect?</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Button
+              TouchableComponent={TouchableOpacity}
+              titleStyle={{ color: colors.primaryText }}
+              buttonStyle={[styles.roundClearBtn,
+                {
+                  borderColor: colors.accentColor,
+                  backgroundColor: this.state.answer ==='correct' ? colors.accentColor : 'transparent'
+                }
+              ]}
+              onPress={() => this.toggleCorrect('correct')}
+              containerStyle={{ flex: 1 }}
+              title={'Correct'}/>
+            <Button
+              TouchableComponent={TouchableOpacity}
+              titleStyle={{ color: colors.primaryText }}
+              buttonStyle={[
+                styles.roundClearBtn,
+                {
+                  borderColor: colors.error,
+                  backgroundColor: this.state.answer ==='incorrect'? colors.error : 'transparent'
+                }
+              ]}
+              onPress={() => this.toggleCorrect('incorrect')}
+              containerStyle={{ flex: 1 }}
+              title={'Incorrect'}/>
+          </View>
+
         </View>
       </View>
     );
@@ -89,10 +135,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20
   },
-  cardFront: {
+  cardContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'stretch',
     margin: 20,
     padding: 20,
     elevation: 3,
@@ -103,15 +148,20 @@ const styles = StyleSheet.create({
   },
   textButton: {
     textAlign: 'center'
-
   },
   top: {
     flex: 1
   },
   bottom: {
     justifyContent: 'flex-end'
-  }
 
+  },
+  roundClearBtn: {
+    elevation: 0,
+    margin: 10,
+    borderWidth: 2,
+    borderRadius: 20
+  }
 });
 
 function mapStateToProps({ scores, activeDeck }) {

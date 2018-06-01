@@ -2,6 +2,7 @@ export const CREATE_DECK_SCORES = 'CREATE_DECK_SCORES';
 export const ADD_QUESTION_SCORE = 'ADD_QUESTION_SCORE';
 export const INIT_ACTIVE_DECK = 'INIT_ACTIVE_DECK';
 export const TOGGLE_CHECKBOX = 'TOGGLE_CHECKBOX';
+export const SET_ANSWER_CORRECT = 'SET_ANSWER_CORRECT';
 
 export function createDeckScores(deckId) {
   return {
@@ -15,19 +16,18 @@ export function addQuestionScore(deckId, cid, isCorrect) {
     type: ADD_QUESTION_SCORE,
     deckId,
     cid,
-    isCorrect: shouldBeChecked
+    answer: shouldBeChecked
   };
 }
 
 export function initActiveDeck(cards, deck) {
-
   const activeDeck = {};
   activeDeck.cards = cards;
   activeDeck.answers = {};
   //TODO make more readable - convert to for loop for performance
   cards.forEach(card => activeDeck.answers[card.id] = Object.assign({}, card.options.map((o) => ({
     isChecked: false,
-    shouldBeChecked: o.isCorrect
+    shouldBeChecked: o.answer
   }))));
 
   return {
@@ -44,5 +44,11 @@ export function toggleCheckBox(cardId, checkBoxIndex) {
     checkBoxIndex
 
   };
+}
 
+export function setAnswerToCorrect(cardId){
+  return {
+    type:SET_ANSWER_CORRECT,
+    cardId
+  }
 }
