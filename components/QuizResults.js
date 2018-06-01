@@ -2,9 +2,6 @@ import React from 'react';
 import {View, Text, BackHandler} from 'react-native';
 import {connect} from 'react-redux';
 import {MaterialIcons} from '@expo/vector-icons';
-import {} from 'react-navigation/src/views/Header/HeaderBackButton'
-
-
 
 class QuizResults extends React.Component {
   correctCount = 0;

@@ -1,7 +1,9 @@
-import {ADD_CARD, CREATE_NEW_DECK} from '../actions/decks';
+import {ADD_CARD, CREATE_NEW_DECK, DELETE_DECK} from '../actions/decks';
+import sampleData from '../util/sampleData'
 
+const initialData = sampleData.decks;
 
-export function decks(state = {}, action) {
+export function decks(state = initialData, action) {
   switch (action.type) {
     case CREATE_NEW_DECK:
       return{
@@ -12,6 +14,12 @@ export function decks(state = {}, action) {
           name:action.deckName,
           dateCreated:action.deckCreated
         }
+      };
+    case DELETE_DECK:
+      debugger;
+      let {[action.deckId]:value, ...filtered} = state;
+      return {
+        ...filtered
       };
     case ADD_CARD:
       return{

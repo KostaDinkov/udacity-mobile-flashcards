@@ -1,14 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
-import {Button} from 'react-native-elements'
+import {Button, Icon} from 'react-native-elements'
 import {connect} from 'react-redux'
 
 
 class DeckDetails extends React.Component {
 
-  static navigationOptions = {
-    title:'Deck Details'
-  };
+  static navigationOptions = ({navigation})=>({
+    title: 'Deck Details',
+    headerLeft:<Icon name="arrow-back"
+                              onPress={()=>navigation.navigate('Home')}
+                              size={26}
+                              style={{marginLeft:15}}
+
+    />
+  });
   render() {
     const deck = this.props.decks[this.props.navigation.getParam('deck','NO DECKS')];
     const name = deck.name ;
