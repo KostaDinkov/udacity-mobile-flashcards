@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableNativeFeedback,ScrollView} from 'react-native';
-import {Button, Icon, ListItem} from 'react-native-elements';
+import {View, StyleSheet, ScrollView} from 'react-native';
+import {Text} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {deleteDeck} from '../actions/decks';
-import * as colors from '../util/colors'
+import * as colors from '../util/colors';
+import {MainButton} from './ui';
+import DeckItem from './DeckItem';
 
 class DeckList extends React.Component {
 
@@ -11,7 +13,7 @@ class DeckList extends React.Component {
     title: 'Mobile Flashcards'
   };
 
-  handleDeleteDeck(id){
+  handleDeleteDeck(id) {
     //TODO confirm deletion
     this.props.dispatch(deleteDeck(id));
   }
@@ -21,26 +23,23 @@ class DeckList extends React.Component {
     const decks = this.props.decks;
     return (
       <View style={styles.container}>
-        <Text>Available Decks:</Text>
+        <Text h4 style={styles.title}>Choose a quiz to practice</Text>
         <ScrollView>
-          {Object.keys(decks).map(id => (
-            <ListItem
-              key={id}
-              rightIcon={<Icon
-                size={22}
-                color={colors.error}
-                name={'delete'}
-                raised
-                onPress={()=>this.handleDeleteDeck(id)}
-              />}
-              onPress={() => this.props.navigation.navigate('DeckDetails', { deck: id })}
-              title={decks[id].name}
-              subtitle={`Cards:${decks[id].cards.length}`}
-            >
-            </ListItem>
-          ))}
+          {Object.keys(decks).map(id => (<DeckItem
+            key={id}
+            deckId={id}
+            deckName={decks[id].name}
+            cardCount={decks[id].cards.length}
+            handleDeleteDeck={this.handleDeleteDeck.bind(this)}
+            navigate={this.props.navigation.navigate.bind(this)}
+          />))}
         </ScrollView>
-        <Button title='Create New Deck' onPress={() => this.props.navigation.navigate('CreateNewDeck')}/>
+
+        <MainButton
+          title='Create New Deck'
+          onPress={() => this.props.navigation.navigate('CreateNewDeck')}
+        />
+
       </View>
     );
   }
@@ -50,22 +49,16 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.lightText,
     alignItems: 'stretch'
-
   },
-  deckItem: {
-    flex: 1,
-    backgroundColor: '#ccc',
-    padding: 2,
-    margin: 2,
-    flexDirection: 'row'
-  },
-
-
+  title: {
+    textAlign: 'center',
+    color: colors.darkPrimary
+  }
 });
 
-function mapStateToProps({decks}) {
+function mapStateToProps({ decks }) {
   return { decks };
 }
 
