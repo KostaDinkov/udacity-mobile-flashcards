@@ -11,6 +11,7 @@ export function MainButton(props){
       titleStyle={{color:colors.lightText}}
       buttonStyle = {{backgroundColor:colors.primary, marginVertical:10}}
       onPress = {props.onPress}
+      disabled={props.disabled}
     />
   )
 }
@@ -58,3 +59,4 @@ export function CheckboxCustom(props){
   )
 
 }
+

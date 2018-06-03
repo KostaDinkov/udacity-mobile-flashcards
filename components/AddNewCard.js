@@ -1,16 +1,22 @@
 import React from 'react';
-import {View, Text, TextInput, KeyboardAvoidingView} from 'react-native';
-import Toast from 'react-native-simple-toast'
-import {CheckBox, Button} from 'react-native-elements';
+import {View, KeyboardAvoidingView, StyleSheet,ScrollView} from 'react-native';
+import Toast from 'react-native-simple-toast';
+import {CheckBox, Button, Card, Input, Text} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {generateId} from '../util/helpers';
-import {addNewCard} from '../actions/cards'
+import {addNewCard} from '../actions/cards';
 import {addCard} from '../actions/decks';
+import * as colors from '../util/colors';
+import {MainButton} from './ui';
 
 class AddNewCard extends React.Component {
   state = {
     question: '',
-    options: [{text:'',answer:false},{text:'',answer:false}]
+    options: [{ text: '', answer: false }, { text: '', answer: false }]
+  };
+
+  static navigationOptions={
+    title:'Add New Question'
   };
 
   updateOptionText(i, optionText) {
@@ -21,8 +27,9 @@ class AddNewCard extends React.Component {
   }
 
   toggleOptionCorrect(i) {
+    debugger;
     let options = this.state.options;
-    options[i] = { ...options[i], answer: !options[i].isCorrect };
+    options[i] = { ...options[i], answer: !options[i].answer };
     this.setState({ options });
   }
 
@@ -31,112 +38,143 @@ class AddNewCard extends React.Component {
     this.setState({ options: [...this.state.options, { text: '', answer: false }] });
   }
 
-  removeOption(i){
-    let options = this.state.options.filter((e,index)=> index!==i);
-    this.setState({options})
+  removeOption(i) {
+    let options = this.state.options.filter((e, index) => index !== i);
+    this.setState({ options });
   }
 
-  saveCard(){
+  saveCard() {
     const deck = this.props.navigation.getParam('deck');
     let card = {
-      question:this.state.question,
+      question: this.state.question,
       options: this.state.options,
-      id:'cid'+generateId()
+      id: 'cid' + generateId()
     };
-    const inputCheckResult = AddNewCard.checkInputs(card);
-    if(inputCheckResult === true){
+    const inputCheckResult = AddNewCard.validateForm(card);
+    if (inputCheckResult === true) {
       this.props.dispatch(addNewCard(card));
-      this.props.dispatch(addCard(deck.id,card.id));
+      this.props.dispatch(addCard(deck.id, card.id));
       //TODO persist the store
-      this.props.navigation.navigate('DeckDetails',{deck:deck.id})
+      this.props.navigation.navigate('DeckDetails', { deck: deck.id });
     }
-    else{
-      Toast.show(inputCheckResult,Toast.LONG)
+    else {
+      Toast.show(inputCheckResult, Toast.LONG);
     }
 
   }
 
-  static checkInputs(card){
-    if(card.question ===''){
+  static validateForm(card) {
+    if (card.question === '') {
       return 'Question text may not be empty!';
     }
-    else if (card.options.filter(o => o.answer).length < 1){
-      return 'There must be at least one correct option'
+    else if (card.options.filter(o => o.answer).length < 1) {
+      return 'There must be at least one correct option';
     }
-    else if (card.options.some(o=>o.text === '')){
-      return 'Options must have text'
+    else if (card.options.some(o => o.text === '')) {
+      return 'Options must have text';
     }
     else return true;
   }
 
   render() {
-
     const deck = this.props.navigation.getParam('deck');
 
     return (
-      <KeyboardAvoidingView style={{flex:1}}   enabled >
-        <Text>
-          {deck.name}
-        </Text>
-        <Text>
-          Question:
-        </Text>
-        <TextInput
-          placeholder='Enter question text here...'
-          onChangeText={(question) => this.setState({ question })}
-          value={this.state.question}
-        />
-        <Text>
-          Options:
-        </Text>
-        {
-
-          this.state.options.map((option, i) => {
-            return (
-
-              <View key={i} style={{  flexDirection: 'row' }}>
-
-                <TextInput
-                  value={this.state.options[i].text}
-                  placeholder='Enter option text here'
-                  onChangeText={(optionText) => this.updateOptionText(i, optionText)}
-                  style={{flex:6}}
-                />
-                <CheckBox
-                  checked={this.state.options[i].isCorrect}
-                  onPress={() => {
-                    this.toggleOptionCorrect(i);
-                  }}
-                  center
-                  containerStyle={{backgroundColor:'transparent', borderWidth:0, margin:0,padding:0,marginLeft:0,marginRight:0, flex:1, justifyContent:'center'}}
-
-                />
-                <Button
-                  rounded
-                  title={"x"}
-                  disabled = {this.state.options.length<3}
-                  backgroundColor={'red'}
-                  containerViewStyle={{flex:1}}
-                  onPress={()=>this.removeOption(i)}/>
-              </View>
-            );
-          })
-        }
-        <Button
-          title='Add Option'
-          onPress={() => this.addOption()}
-        />
-        <Button
-          title='Save Card'
-          onPress={() => this.saveCard()}
-        />
+      <KeyboardAvoidingView style={styles.container} enabled>
+        <Card
+          title={'Current Deck\n' +deck.name}
+          containerStyle={styles.card}
+        >
+          <ScrollView
+            style={{maxHeight:'70%'}}>
+          <Input
+            label={'Question:'}
+            containerStyle={{ width: '100%' }}
+            placeholder='Enter question text here...'
+            onChangeText={(question) => this.setState({ question })}
+            value={this.state.question}
+          />
+          {
+            this.state.options.map((option, i) => {
+              return (
+                <View key={i} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Input
+                    containerStyle={{ width: '100%', flex: 6 }}
+                    value={this.state.options[i].text}
+                    placeholder={`Option ${i+1} text here`}
+                    onChangeText={(optionText) => this.updateOptionText(i, optionText)}
+                  />
+                  <CheckBox
+                    checked={this.state.options[i].answer}
+                    onPress={() => {this.toggleOptionCorrect(i);}}
+                    center
+                    checkedColor={colors.accentColor}
+                    containerStyle={styles.checkBoxContainer}
+                  />
+                  <Button
+                    clear
+                    title={null}
+                    disabled={this.state.options.length < 3}
+                    icon={{
+                      name: 'delete',
+                      color: this.state.options.length < 3 ? colors.divider : colors.error
+                    }}
+                    onPress={() => this.removeOption(i)}
+                  />
+                </View>
+              );
+            })
+          }
+          </ScrollView>
+          <Text style={styles.hintText}>Hint - Check the checkboxes for the options that are correct answers to the question</Text>
+          <MainButton
+            title='Add Option'
+            onPress={() => this.addOption()}
+          />
+          <MainButton
+            title='Save Card'
+            onPress={() => this.saveCard()}
+          />
+        </Card>
       </KeyboardAvoidingView>
     );
   }
 }
 
-function mapStateToProps({ cards }) {
-  return { cards };
-}
+const styles = StyleSheet.create({
 
-export default connect(mapStateToProps)(AddNewCard);
+  card: {
+
+    marginHorizontal: 0,
+    borderRadius: 15
+  },
+  cardTitle: {
+    color: colors.darkPrimary
+  },
+  container: {
+    padding: 20,
+    flex: 1,
+    backgroundColor: colors.lightText
+
+  },
+  hintText:{
+    fontSize:16,
+    fontStyle:'italic',
+    color:colors.disabled,
+    marginVertical:10
+  },
+  checkBoxContainer:{
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    margin: 0,
+    padding: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    flex: 1,
+    justifyContent: 'center'
+  }
+});
+
+
+
+export default connect(({cards})=>({cards}))(AddNewCard);

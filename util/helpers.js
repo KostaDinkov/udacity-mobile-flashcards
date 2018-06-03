@@ -43,11 +43,11 @@ export function setLocalNotification() {
                              .then(({ status }) => {
                                if (status === 'granted') {
                                  Notifications.cancelAllScheduledNotificationsAsync();
-
+                                 //TODO fix this for production, so that the notification is set for the next day.
                                  let tomorrow = new Date();
-                                 tomorrow.setDate(tomorrow.getDate() + 0);
-                                 tomorrow.setHours(16);
-                                 tomorrow.setMinutes(55);
+                                 tomorrow.setDate(tomorrow.getDate() );
+                                 tomorrow.setHours(tomorrow.getHours());
+                                 tomorrow.setMinutes(tomorrow.getMinutes()+1);
 
                                  Notifications.scheduleLocalNotificationAsync(
                                    createNotification(),

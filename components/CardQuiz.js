@@ -1,27 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View, Text, ScrollView, StyleSheet, Easing, TouchableOpacity, Button} from 'react-native';
-import FlipView from './FlipView';
-import {CheckBox} from 'react-native-elements';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import {CheckBox, Divider, Text, Icon} from 'react-native-elements';
 import {toggleCheckBox} from '../actions';
+import * as colors from '../util/colors';
 
 class CardQuiz extends React.Component {
-  state = {
-    isFlipped: false
-  };
-  cardFront(card) {
 
+  render() {
+    const card = this.props.card;
     return (
       <View style={styles.cardContainer}>
         <View style={styles.top}>
-          <Text>{card.question}</Text>
+          <Text style={styles.questionText}>{card.question}</Text>
+          <Divider style={{ marginBottom: 10 }}/>
           <ScrollView>
             {card.options.map((o, i) => (
               <CheckBox
                 key={'check' + i}
                 title={o.text}
-                containerStyle={{ marginHorizontal: 0 }}
+                containerStyle={{ marginHorizontal: 0, marginLeft: 0, marginRight: 0 }}
                 checked={this.props.activeDeck.answers[card.id][i].isChecked}
+                checkedColor={colors.primary}
                 onPress={() => {
                   this.props.dispatch(toggleCheckBox(card.id, i));
                 }}
@@ -29,89 +29,52 @@ class CardQuiz extends React.Component {
             ))}
           </ScrollView>
         </View>
-
-        <View style={styles.bottom}>
-
-          <TouchableOpacity onPress={() => this.setState({ isFlipped: !this.state.isFlipped })}>
-            <Text style={styles.textButton}>Flip</Text>
-          </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Icon
+            type='entypo'
+            name='chevron-thin-left'
+            color={this.props.index===0?'transparent':colors.secondaryText}
+          />
+          <Text style={styles.footerText}>
+            Card {this.props.index + 1} of {this.props.pages}
+          </Text>
+          <Icon
+            type='entypo'
+            name='chevron-thin-right'
+            color={this.props.index===this.props.pages-1?'transparent':colors.secondaryText}
+          />
         </View>
-      </View>
-    );
-  }
-
-  cardBack(card) {
-
-    return (
-      <View style={styles.cardContainer}>
-        <View style={styles.top}>
-          <Text>{card.question}</Text>
-          <Text>Correct answers:</Text>
-          {card.options.map((o, i) => {
-            if (o.answer) {
-              return (
-                <Text key={i}>{o.text}</Text>
-              );
-            }
-          })}
-        </View>
-        <View style={styles.bottom}>
-          <TouchableOpacity onPress={() => this.setState({ isFlipped: !this.state.isFlipped })}>
-            <Text style={styles.textButton}>Flip</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-
-  render() {
-    const card = this.props.card;
-    return (
-      <View style={styles.container}>
-        <FlipView
-          style={{ flex: 1 }}
-          isFlipped={this.state.isFlipped}
-          front={this.cardFront(card)}
-          back={this.cardBack(card)}
-          flipEasing={Easing.out(Easing.ease)}
-          flipAxis='y'
-          flipDuration={500}
-          perspective={1000}
-        >
-        </FlipView>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20
-  },
   cardContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
-    margin: 20,
+    marginVertical: 20,
+    marginHorizontal: 10,
     padding: 20,
-    elevation: 3,
-    borderRadius: 4,
+    borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: colors.disabled,
     backgroundColor: '#fff'
   },
-  textButton: {
-    textAlign: 'center'
-
+  questionText: {
+    marginBottom: 10,
+    color: colors.secondaryText,
+    fontSize: 16
+  },
+  footerText: {
+    textAlign: 'center',
+    fontStyle: 'italic',
+    color: colors.secondaryText
   },
   top: {
     flex: 1
-  },
-  bottom: {
-    justifyContent: 'flex-end'
   }
-
 });
 
 function mapStateToProps({ scores, activeDeck }) {

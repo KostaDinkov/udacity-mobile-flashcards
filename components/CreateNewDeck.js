@@ -71,14 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightText,
 
   },
-  title: {
-    textAlign: 'center',
-    color: colors.darkPrimary
-  },
-  subtitle: {
-    textAlign: 'center',
-    color: colors.primary
-  }
+
 
 });
 
