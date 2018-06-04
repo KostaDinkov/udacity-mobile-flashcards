@@ -24,6 +24,7 @@ export function initActiveDeck(cards, deck) {
   const activeDeck = {};
   activeDeck.cards = cards;
   activeDeck.answers = {};
+  activeDeck.deckName=deck.name;
   //TODO make more readable - convert to for loop for performance
   cards.forEach(card => activeDeck.answers[card.id] = Object.assign({}, card.options.map((o) => ({
     isChecked: false,

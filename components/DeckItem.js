@@ -1,8 +1,8 @@
 import React from 'react';
 import * as colors from '../util/colors';
-import {Text, ListItem, Card, Icon} from 'react-native-elements';
+import {Text, Card, Icon} from 'react-native-elements';
 import {BadgeCustom} from './ui';
-import {View, StyleSheet} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 
 export default class DeckItem extends React.Component {
   render() {
@@ -11,44 +11,35 @@ export default class DeckItem extends React.Component {
     const cardCount = this.props.cardCount;
 
     return (
+      <Card containerStyle={{
+        marginHorizontal: 0,
+        borderRadius: 15
+      }}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity onPress={() => this.props.navigate('DeckDetails', { deck: deckId })}>
+              <Text style={{ color: colors.darkPrimary, fontSize: 18, fontWeight: 'bold' }}>{deckName}</Text>
+              <View style={{
+                flexDirection: 'row',
+                marginTop: 10
+              }}>
+                <Text style={{ color: colors.secondaryText }}>Contains </Text>
+                <BadgeCustom value={cardCount}/>
+                <Text style={{ color: colors.secondaryText }}> cards</Text>
+              </View>
+            </TouchableOpacity>
 
-      <Card containerStyle={styles.card}>
-        <ListItem
-          containerStyle={styles.listItem}
-          rightIcon={<Icon
-            size={22}
-            color={colors.error}
-            name={'delete'}
-            raised
-            onPress={() => this.props.handleDeleteDeck(deckId)}
-          />}
-          onPress={() => this.props.navigate('DeckDetails', { deck: deckId })}
-          title={deckName}
-          subtitle={(
-            <View style={styles.subtitle}>
-              <Text>Contains </Text>
-              <BadgeCustom value={cardCount}/>
-              <Text> cards</Text>
-            </View>)}
-        >
-        </ListItem>
+          </View>
+          <View>
+            <Icon
+              size={22}
+              color={colors.error}
+              name={'delete'}
+              raised
+              onPress={() => this.props.handleDeleteDeck(deckId)}/>
+          </View>
+        </View>
       </Card>
-
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  listItem: {
-    padding: 0
-  },
-  card: {
-    marginHorizontal: 0,
-    borderRadius: 15
-  },
-  subtitle: {
-    flexDirection: 'row',
-    marginTop: 10
-  }
-});

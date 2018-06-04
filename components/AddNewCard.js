@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, KeyboardAvoidingView, StyleSheet,ScrollView} from 'react-native';
+import {View, KeyboardAvoidingView, StyleSheet, ScrollView} from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {CheckBox, Button, Card, Input, Text} from 'react-native-elements';
+import {CheckBox, Button, Card, Input, Text, Divider} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {generateId} from '../util/helpers';
 import {addNewCard} from '../actions/cards';
@@ -15,8 +15,8 @@ class AddNewCard extends React.Component {
     options: [{ text: '', answer: false }, { text: '', answer: false }]
   };
 
-  static navigationOptions={
-    title:'Add New Question'
+  static navigationOptions = {
+    title: 'Add New Question'
   };
 
   updateOptionText(i, optionText) {
@@ -27,7 +27,7 @@ class AddNewCard extends React.Component {
   }
 
   toggleOptionCorrect(i) {
-    debugger;
+
     let options = this.state.options;
     options[i] = { ...options[i], answer: !options[i].answer };
     this.setState({ options });
@@ -82,49 +82,58 @@ class AddNewCard extends React.Component {
     return (
       <KeyboardAvoidingView style={styles.container} enabled>
         <Card
-          title={'Current Deck\n' +deck.name}
+          title=
+            {
+              <View>
+                <Text style={{ textAlign:'center',fontSize: 18, color: colors.secondaryText }}>Current Deck</Text>
+                <Text style={{ textAlign:'center', fontSize: 22, color: colors.darkPrimary, fontWeight: 'bold' }}>{deck.name}</Text>
+                <Divider style={{marginVertical:10}}/>
+              </View>
+            }
           containerStyle={styles.card}
         >
           <ScrollView
-            style={{maxHeight:'70%'}}>
-          <Input
-            label={'Question:'}
-            containerStyle={{ width: '100%' }}
-            placeholder='Enter question text here...'
-            onChangeText={(question) => this.setState({ question })}
-            value={this.state.question}
-          />
-          {
-            this.state.options.map((option, i) => {
-              return (
-                <View key={i} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Input
-                    containerStyle={{ width: '100%', flex: 6 }}
-                    value={this.state.options[i].text}
-                    placeholder={`Option ${i+1} text here`}
-                    onChangeText={(optionText) => this.updateOptionText(i, optionText)}
-                  />
-                  <CheckBox
-                    checked={this.state.options[i].answer}
-                    onPress={() => {this.toggleOptionCorrect(i);}}
-                    center
-                    checkedColor={colors.accentColor}
-                    containerStyle={styles.checkBoxContainer}
-                  />
-                  <Button
-                    clear
-                    title={null}
-                    disabled={this.state.options.length < 3}
-                    icon={{
-                      name: 'delete',
-                      color: this.state.options.length < 3 ? colors.divider : colors.error
-                    }}
-                    onPress={() => this.removeOption(i)}
-                  />
-                </View>
-              );
-            })
-          }
+            style={{ maxHeight: '70%' }}>
+            <Input
+              label={'Question:'}
+              containerStyle={{ width: '100%' }}
+              placeholder='Enter question text here...'
+              onChangeText={(question) => this.setState({ question })}
+              value={this.state.question}
+            />
+            {
+              this.state.options.map((option, i) => {
+                return (
+                  <View key={i} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Input
+                      containerStyle={{ width: '100%', flex: 6 }}
+                      value={this.state.options[i].text}
+                      placeholder={`Option ${i + 1} text here`}
+                      onChangeText={(optionText) => this.updateOptionText(i, optionText)}
+                    />
+                    <CheckBox
+                      checked={this.state.options[i].answer}
+                      onPress={() => {
+                        this.toggleOptionCorrect(i);
+                      }}
+                      center
+                      checkedColor={colors.accentColor}
+                      containerStyle={styles.checkBoxContainer}
+                    />
+                    <Button
+                      clear
+                      title={null}
+                      disabled={this.state.options.length < 3}
+                      icon={{
+                        name: 'delete',
+                        color: this.state.options.length < 3 ? colors.divider : colors.error
+                      }}
+                      onPress={() => this.removeOption(i)}
+                    />
+                  </View>
+                );
+              })
+            }
           </ScrollView>
           <Text style={styles.hintText}>Hint - Check the checkboxes for the options that are correct answers to the question</Text>
           <MainButton
@@ -144,7 +153,6 @@ class AddNewCard extends React.Component {
 const styles = StyleSheet.create({
 
   card: {
-
     marginHorizontal: 0,
     borderRadius: 15
   },
@@ -157,13 +165,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightText
 
   },
-  hintText:{
-    fontSize:16,
-    fontStyle:'italic',
-    color:colors.disabled,
-    marginVertical:10
+  hintText: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    color: colors.disabled,
+    marginVertical: 10
   },
-  checkBoxContainer:{
+  checkBoxContainer: {
     backgroundColor: 'transparent',
     borderWidth: 0,
     margin: 0,
@@ -175,6 +183,4 @@ const styles = StyleSheet.create({
   }
 });
 
-
-
-export default connect(({cards})=>({cards}))(AddNewCard);
+export default connect(({ cards }) => ({ cards }))(AddNewCard);

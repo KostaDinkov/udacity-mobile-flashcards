@@ -1,26 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View, StyleSheet, Easing, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Easing} from 'react-native';
 import FlipView from './FlipView';
-import {Text, Button, Divider} from 'react-native-elements';
+import {Text, Divider} from 'react-native-elements';
 import * as colors from '../util/colors';
 import {setAnswerToCorrect} from '../actions';
-
-const FlipButton = (props) => (
-  <Button
-    title='Flip'
-    clear
-    titleStyle={{
-      color: colors.secondaryText
-    }}
-    buttonStyle={[
-      styles.roundClearBtn,
-      { borderColor: colors.secondaryText }
-    ]}
-    onPress={() => props.toggle()}>
-  </Button>
-
-);
+import {CardFooter, OvalButton} from './ui';
 
 class Card extends React.Component {
   state = {
@@ -28,20 +13,17 @@ class Card extends React.Component {
     answer: 'not answered'
   };
 
-  toggleCorrect(result) {
-
+  setAnswer(result) {
     const cardId = this.props.card.id;
 
-    this.setState({
-      answer: result
-    });
+    this.setState({ answer: result });
+    //update the answer to be correct in the active deck
     if (result === 'correct') {
       this.props.dispatch(setAnswerToCorrect(cardId));
     }
-
   }
 
-  toggleFlip() {
+  flipCard() {
     this.setState({ isFlipped: !this.state.isFlipped });
   }
 
@@ -49,62 +31,56 @@ class Card extends React.Component {
     return (
       <View style={styles.cardContainer}>
         <View style={styles.top}>
-          <Text h3>{card.question}</Text>
+          <Text style={styles.title}>{card.question}</Text>
         </View>
-        <View style={styles.bottom}>
-          <FlipButton toggle={this.toggleFlip.bind(this)}/>
-        </View>
+        <OvalButton
+          title='Flip'
+          onPress={() => this.flipCard()}
+        />
+        <CardFooter pages={this.props.pages} index={this.props.index}/>
       </View>
     );
   }
 
   cardBack(card) {
-
+    debugger;
+    console.log(this.state.answer);
     return (
       <View style={styles.cardContainer}>
         <View style={styles.top}>
-          <Text h4>{card.question}</Text>
-          <Divider/>
-          <Text>Correct answers:</Text>
+          <Text style={styles.title}>{card.question}</Text>
+          <Divider style={{ marginVertical: 10 }}/>
+          <Text style={styles.subtitle}>Correct answers:</Text>
           {card.options.map((o, i) => {
             if (o.answer) {
               return (
-                <Text key={i}>{o.text}</Text>
+                <View key={i}>
+                  <Text  style={styles.normal}> {o.text}</Text>
+                </View>
               );
             }
           })}
         </View>
 
         <View style={styles.bottom}>
-          <Text style={{ textAlign: 'center' }}>Was your guess correct or incorrect?</Text>
+          <Text style={styles.normal }>Was your guess correct or incorrect?</Text>
           <View style={{ flexDirection: 'row' }}>
-            <Button
-              TouchableComponent={TouchableOpacity}
-              titleStyle={{ color: colors.primaryText }}
-              buttonStyle={[styles.roundClearBtn,
-                {
-                  borderColor: colors.accentColor,
-                  backgroundColor: this.state.answer ==='correct' ? colors.accentColor : 'transparent'
-                }
-              ]}
-              onPress={() => this.toggleCorrect('correct')}
+            <OvalButton
+              onPress={() => this.setAnswer('correct')}
               containerStyle={{ flex: 1 }}
-              title={'Correct'}/>
-            <Button
-              TouchableComponent={TouchableOpacity}
-              titleStyle={{ color: colors.primaryText }}
-              buttonStyle={[
-                styles.roundClearBtn,
-                {
-                  borderColor: colors.error,
-                  backgroundColor: this.state.answer ==='incorrect'? colors.error : 'transparent'
-                }
-              ]}
-              onPress={() => this.toggleCorrect('incorrect')}
+              title={'Correct'}
+              backgroundColor={this.state.answer === 'correct' ? colors.accentColor : 'transparent'}
+              borderColor={colors.accentColor}
+            />
+            <OvalButton
+              onPress={() => this.setAnswer('incorrect')}
               containerStyle={{ flex: 1 }}
-              title={'Incorrect'}/>
+              title={'Incorrect'}
+              backgroundColor={this.state.answer === 'incorrect' ? colors.error : 'transparent'}
+              borderColor={colors.error}
+            />
           </View>
-
+          <CardFooter pages={this.props.pages} index={this.props.index}/>
         </View>
       </View>
     );
@@ -113,54 +89,49 @@ class Card extends React.Component {
   render() {
     const card = this.props.card;
     return (
-      <View style={styles.container}>
-        <FlipView
-          style={{ flex: 1 }}
-          isFlipped={this.state.isFlipped}
-          front={this.cardFront(card)}
-          back={this.cardBack(card)}
-          flipEasing={Easing.out(Easing.ease)}
-          flipAxis='y'
-          flipDuration={500}
-          perspective={1000}
-        >
-        </FlipView>
-      </View>
+      <FlipView
+        style={{ flex: 1 }}
+        isFlipped={this.state.isFlipped}
+        front={this.cardFront(card)}
+        back={this.cardBack(card)}
+        flipEasing={Easing.out(Easing.ease)}
+        flipAxis='y'
+        flipDuration={500}
+        perspective={1000}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20
-  },
   cardContainer: {
     flex: 1,
     justifyContent: 'center',
-    margin: 20,
+    alignItems: 'stretch',
+    marginVertical: 20,
+    marginHorizontal: 10,
     padding: 20,
-    elevation: 3,
-    borderRadius: 4,
+    borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: colors.disabled,
     backgroundColor: '#fff'
-  },
-  textButton: {
-    textAlign: 'center'
   },
   top: {
     flex: 1
   },
-  bottom: {
-    justifyContent: 'flex-end'
-
+  title: {
+    textAlign: 'center',
+    color: colors.secondaryText,
+    fontSize: 22
   },
-  roundClearBtn: {
-    elevation: 0,
-    margin: 10,
-    borderWidth: 2,
-    borderRadius: 20
+  subtitle: {
+    textAlign: 'center',
+    color: colors.primary,
+    fontSize: 18
+  },
+  normal: {
+    textAlign: 'center',
+    color: colors.secondaryText
   }
 });
 

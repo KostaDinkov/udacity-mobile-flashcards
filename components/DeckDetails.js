@@ -4,7 +4,7 @@ import {Icon, Card, Text} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {clearLocalNotification, setLocalNotification} from '../util/helpers';
 import * as colors from '../util/colors';
-import {CheckboxCustom, MainButton, TextDivider} from './ui';
+import { MainButton, OvalButton, TextDivider} from './ui';
 
 class DeckDetails extends React.Component {
 
@@ -19,7 +19,7 @@ class DeckDetails extends React.Component {
                       onPress={() => navigation.navigate('Home')}
                       size={26}
                       color={colors.lightText}
-                      style={{ marginLeft: 19 }}
+                      containerStyle={{ marginLeft: 20 }}
 
     />
   });
@@ -49,16 +49,17 @@ class DeckDetails extends React.Component {
           containerStyle={styles.card}
         >
           <View style={{ flexDirection: 'row' }}>
-
-            <CheckboxCustom
+            <OvalButton
               title={'Quiz'}
-              checked={this.state.quizMode}
+              backgroundColor={this.state.quizMode?colors.accentColor:'transparent'}
               onPress={()=>this.toggleMode('quiz')}
+              containerStyle={{flex:1}}
             />
-            <CheckboxCustom
+            <OvalButton
               title={'Flash Cards'}
-              checked={!this.state.quizMode}
+              backgroundColor={!this.state.quizMode?colors.accentColor:'transparent'}
               onPress={() => this.toggleMode('flashCards')}
+              containerStyle={{flex:1}}
             />
           </View>
           <MainButton

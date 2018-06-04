@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Text} from 'react-native-elements';
+import {Text, Overlay} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {deleteDeck} from '../actions/decks';
 import * as colors from '../util/colors';
@@ -25,14 +25,15 @@ class DeckList extends React.Component {
       <View style={styles.container}>
         <Text h4 style={styles.title}>Choose a quiz to practice</Text>
         <ScrollView>
-          {Object.keys(decks).map(id => (<DeckItem
-            key={id}
-            deckId={id}
-            deckName={decks[id].name}
-            cardCount={decks[id].cards.length}
-            handleDeleteDeck={this.handleDeleteDeck.bind(this)}
-            navigate={this.props.navigation.navigate.bind(this)}
-          />))}
+          {Object.keys(decks).map(id => (
+            <DeckItem
+              key={id}
+              deckId={id}
+              deckName={decks[id].name}
+              cardCount={decks[id].cards.length}
+              handleDeleteDeck={this.handleDeleteDeck.bind(this)}
+              navigate={this.props.navigation.navigate.bind(this)}
+            />))}
         </ScrollView>
 
         <MainButton

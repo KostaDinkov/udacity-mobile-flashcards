@@ -25,7 +25,7 @@ export function activeDeck(state = {}, action) {
       };
 
     case SET_ANSWER_CORRECT:
-      debugger;
+
       let answers = {};
       let cardId= action.cardId;
       for (let optionIndex of Object.keys(state.answers[cardId])) {

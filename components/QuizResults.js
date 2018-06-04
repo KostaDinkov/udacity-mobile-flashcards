@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, BackHandler, StyleSheet} from 'react-native';
-import {Card, Text, Badge} from 'react-native-elements';
+import {Card, Text, Badge,Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {MaterialIcons} from '@expo/vector-icons';
 import * as colors from '../util/colors';
+import {ResultsTitle} from './ui';
 
 class QuizResults extends React.Component {
   correctCount = 0;
@@ -15,10 +16,11 @@ class QuizResults extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'Quiz Results',
-    headerLeft: <MaterialIcons name="arrow-back"
-                               onPress={() => navigation.navigate('Home')}
-                               size={25}
-                               style={{ marginLeft: 15 }}
+    headerLeft: <Icon name="arrow-back"
+                      onPress={() => navigation.navigate('Home')}
+                      size={26}
+                      color={colors.lightText}
+                      containerStyle={{ marginLeft: 20 }}
 
     />
   });
@@ -47,7 +49,7 @@ class QuizResults extends React.Component {
 
   getBadgeColor() {
     const score = this.getScore();
-    debugger;
+
     switch (true) {
       case (score > 80):
         return colors.accentColor;
@@ -61,16 +63,15 @@ class QuizResults extends React.Component {
   }
 
   render() {
-
     const answers = this.props.activeDeck.answers;
-
+    const deckName = this.props.activeDeck.deckName;
     return (
       <View style={styles.container}>
         <Card
-          title='Quiz Results'
+          title={<ResultsTitle deckName={deckName}/>}
           containerStyle={styles.card}
         >
-          <View>
+
             <View>
               {Object.keys(answers).map((k, i) => (
                 <View key={k}>
@@ -82,8 +83,14 @@ class QuizResults extends React.Component {
                 </View>
               ))}
             </View>
-
-            <Text style={{textAlign:'center',marginVertical:10,fontSize:18, color:colors.darkPrimary}}>Total Correct Answers: {this.correctCount} of {this.totalCount}</Text>
+            <Text style={{
+              textAlign:'center',
+              marginVertical:10,
+              fontSize:18,
+              color:colors.darkPrimary
+            }}
+            >Total Correct Answers: {this.correctCount} of {this.totalCount}
+            </Text>
 
             <Badge
               containerStyle={{
@@ -94,7 +101,7 @@ class QuizResults extends React.Component {
               <Text h4 style={{ color: colors.lightText }}>Score: {this.getScore()}%</Text>
             </Badge>
 
-          </View>
+
         </Card>
       </View>
     );

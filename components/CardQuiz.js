@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {CheckBox, Divider, Text, Icon} from 'react-native-elements';
+import {CheckBox, Divider, Text} from 'react-native-elements';
 import {toggleCheckBox} from '../actions';
 import * as colors from '../util/colors';
+import {CardFooter} from './ui';
 
 class CardQuiz extends React.Component {
 
@@ -29,21 +30,7 @@ class CardQuiz extends React.Component {
             ))}
           </ScrollView>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Icon
-            type='entypo'
-            name='chevron-thin-left'
-            color={this.props.index===0?'transparent':colors.secondaryText}
-          />
-          <Text style={styles.footerText}>
-            Card {this.props.index + 1} of {this.props.pages}
-          </Text>
-          <Icon
-            type='entypo'
-            name='chevron-thin-right'
-            color={this.props.index===this.props.pages-1?'transparent':colors.secondaryText}
-          />
-        </View>
+        <CardFooter pages={this.props.pages} index={this.props.index}/>
       </View>
     );
   }
@@ -66,11 +53,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: colors.secondaryText,
     fontSize: 16
-  },
-  footerText: {
-    textAlign: 'center',
-    fontStyle: 'italic',
-    color: colors.secondaryText
   },
   top: {
     flex: 1
