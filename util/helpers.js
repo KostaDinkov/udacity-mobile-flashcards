@@ -7,12 +7,6 @@ export function generateId() {
   return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-export function timeToString(time = Date.now()) {
-  const date = new Date(time);
-  const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  return todayUTC.toISOString().split('T')[0];
-}
-
 export function clearLocalNotification() {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
                      .then(Notifications.cancelAllScheduledNotificationsAsync);
@@ -34,6 +28,19 @@ function createNotification() {
   };
 }
 
+const afterAminute=()=>{
+  let afterAminute = new Date();
+  afterAminute.setMinutes(afterAminute.getMinutes()+1);
+  return afterAminute;
+};
+
+const tomorrow=()=>{
+  let tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate()+1 );
+  tomorrow.setHours(20);
+  tomorrow.setMinutes(0);
+  return tomorrow;
+};
 export function setLocalNotification() {
   AsyncStorage.getItem(NOTIFICATION_KEY)
               .then(JSON.parse)
@@ -43,20 +50,13 @@ export function setLocalNotification() {
                              .then(({ status }) => {
                                if (status === 'granted') {
                                  Notifications.cancelAllScheduledNotificationsAsync();
-                                 //TODO fix this for production, so that the notification is set for the next day.
-                                 let tomorrow = new Date();
-                                 tomorrow.setDate(tomorrow.getDate() );
-                                 tomorrow.setHours(tomorrow.getHours());
-                                 tomorrow.setMinutes(tomorrow.getMinutes()+1);
-
                                  Notifications.scheduleLocalNotificationAsync(
                                    createNotification(),
                                    {
-                                     time: tomorrow,
+                                     time: afterAminute(),//TODO for production, change this with tomorrow().
                                      repeat: 'day'
                                    }
                                  );
-
                                  AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
                                }
                              });

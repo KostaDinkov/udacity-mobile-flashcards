@@ -1,27 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Animated,
-  Easing,
-  Platform,
-  StyleSheet,
-  View,
-  ViewPropTypes,
-} from 'react-native';
+import React, {Component} from 'react';
+import {Animated, Easing, Platform, StyleSheet, View} from 'react-native';
+import sharedStyles from './styles'
 
 class FlipView extends Component {
-  static propTypes = {
-    ...ViewPropTypes,
-    front: PropTypes.node.isRequired,
-    back: PropTypes.node.isRequired,
-    flipDuration: PropTypes.number,
-    flipEasing: PropTypes.func,
-    flipAxis: PropTypes.oneOf(['x', 'y']),
-    perspective: PropTypes.number,
-    onFlipStart: PropTypes.func,
-    onFlipEnd: PropTypes.func,
-    isFlipped: PropTypes.bool,
-  };
 
   static defaultProps = {
     flipDuration: 500,
@@ -30,7 +11,7 @@ class FlipView extends Component {
     perspective: 1000,
     onFlipStart: () => {},
     onFlipEnd: () => {},
-    isFlipped: false,
+    isFlipped: false
   };
 
   constructor(props) {
@@ -54,8 +35,8 @@ class FlipView extends Component {
         toValue: nextIsFlipped ? 1 : 0,
         duration: this.props.flipDuration,
         easing: this.props.flipEasing,
-        useNativeDriver: true,
-      },
+        useNativeDriver: true
+      }
     ).start(({ finished }) => {
       if (!finished) {
         return;
@@ -74,20 +55,20 @@ class FlipView extends Component {
           pointerEvents={this.state.isFlipped ? 'none' : 'auto'}
           style={[
             StyleSheet.absoluteFill,
-            styles.flippableView,
+            sharedStyles.flippableView,
             {
               transform: [
                 { perspective: this.props.perspective },
-                { [rotateProperty]: this._flipAnim.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '180deg'] }) },
-              ],
+                { [rotateProperty]: this._flipAnim.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '180deg'] }) }
+              ]
             },
             // Android does not support backfaceVisibility
             // https://github.com/facebook/react-native/issues/9718
             Platform.select({
               android: {
-                opacity: this._flipAnim.interpolate({ inputRange: [0, 0.5, 0.5], outputRange: [1, 1, 0] }),
-              },
-            }),
+                opacity: this._flipAnim.interpolate({ inputRange: [0, 0.5, 0.5], outputRange: [1, 1, 0] })
+              }
+            })
           ]}
         >
           {this.props.front}
@@ -100,16 +81,16 @@ class FlipView extends Component {
             {
               transform: [
                 { perspective: this.props.perspective },
-                { [rotateProperty]: this._flipAnim.interpolate({ inputRange: [0, 1], outputRange: ['180deg', '360deg'] }) },
-              ],
+                { [rotateProperty]: this._flipAnim.interpolate({ inputRange: [0, 1], outputRange: ['180deg', '360deg'] }) }
+              ]
             },
             // Android does not support backfaceVisibility
             // https://github.com/facebook/react-native/issues/9718
             Platform.select({
               android: {
-                opacity: this._flipAnim.interpolate({ inputRange: [0.5, 0.5, 1], outputRange: [0, 1, 1] }),
-              },
-            }),
+                opacity: this._flipAnim.interpolate({ inputRange: [0.5, 0.5, 1], outputRange: [0, 1, 1] })
+              }
+            })
           ]}
         >
           {this.props.back}
@@ -117,13 +98,7 @@ class FlipView extends Component {
       </View>
     );
   }
-
 }
 
-const styles = StyleSheet.create({
-  flippableView: {
-    backfaceVisibility: 'hidden',
-  },
-});
-
+const styles = StyleSheet.create({});
 export default FlipView;

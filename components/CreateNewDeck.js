@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Toast from 'react-native-simple-toast';
+import {View} from 'react-native';
 import {Input, Card} from 'react-native-elements';
-import {View, StyleSheet} from 'react-native';
 import {createNewDeck} from '../actions/decks';
 import {generateId} from '../util/helpers';
-import Toast from 'react-native-simple-toast';
-import * as colors from '../util/colors';
 import {MainButton} from './ui';
+import sharedStyles from './styles'
 
 class CreateNewDeck extends React.Component {
   state = {
@@ -28,16 +28,15 @@ class CreateNewDeck extends React.Component {
       this.props.dispatch(createNewDeck(deckId, deckName, deckCreated));
       this.props.navigation.navigate('DeckDetails', { deck: deckId });
     }
-
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={sharedStyles.container}>
         <Card title='Enter Deck Name'
-              titleStyle={styles.cardTitle}
-              containerStyle={styles.card}>
-
+              titleStyle={sharedStyles.h2center}
+              containerStyle={sharedStyles.card}
+        >
           <Input
             placeholder='New Deck Name'
             containerStyle={{width:'100%'}}
@@ -54,25 +53,5 @@ class CreateNewDeck extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  card: {
-
-    marginHorizontal: 0,
-    borderRadius: 15
-  },
-  cardTitle: {
-    color: colors.darkPrimary
-  },
-  container: {
-    padding: 20,
-    flex: 1,
-    backgroundColor: colors.lightText,
-
-  },
-
-
-});
 
 export default connect()(CreateNewDeck);

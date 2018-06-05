@@ -2,14 +2,14 @@ export default  {
   decks:{
     'did1':{
       id:'did1',
-      name:'Do you know Redux?',
+      name:'Do you know Redux',
       cards:['cid1','cid2'],
       dateCreated:'dateTime'
     },
     'did2':{
       id:'did2',
-      name:'Redux Advanced.',
-      cards:['cid3','cid4', 'cid5'],
+      name:'Star Wars Trivia',
+      cards:['cid3','cid4', 'cid5','cid6'],
       dateCreated:'dateTime'
     }
 
@@ -21,21 +21,18 @@ export default  {
       question:"What function hooks together the Redux states and Smart Components(in react)?",
       options:[
         {
-          text:'connect',
+          text:'The connect() function.',
           answer:true
         },
         {
-          text:'mapDispatchToProps',
+          text:'The mapStateToProps() function.',
           answer:false
         },
         {
-          text:'Middleware',
-          answer:false
-        },
-        {
-          text:'connect()',
-          answer:true
+          text: 'The hookState() function',
+          answer: false
         }
+
       ]
     },
     'cid2':{
@@ -44,15 +41,15 @@ export default  {
       question:"How do you use React and Redux together?",
       options:[
         {
-          text:'Through the Provider',
+          text:'By passing the store as a prop to the root component',
+          answer:false
+        },
+        {
+          text:'Import the Provider component from the react-redux package and wrap our root component within.',
           answer:true
         },
         {
-          text:'import the Provider component from the react-redux package and wrap our root component within.',
-          answer:true
-        },
-        {
-          text:'Middleware',
+          text:'Through Middleware.',
           answer:false
         }
       ]
@@ -60,18 +57,18 @@ export default  {
     'cid3':{
       id:'cid3',
       multipleChoice:true,
-      question:"Question three",
+      question:"In how many languages is C-3P0 fluent?",
       options:[
         {
-          text:'Correct option',
+          text:'More than six million',
+          answer:false
+        },
+        {
+          text:'More than a hundred',
           answer:true
         },
         {
-          text:'Correct option',
-          answer:true
-        },
-        {
-          text:'Incorrect option',
+          text:'More than six thousand',
           answer:false
         }
       ]
@@ -79,41 +76,45 @@ export default  {
     'cid4':{
       id:'cid4',
       multipleChoice:false,
-      question:"Question four?",
+      question:"What was Princess Leia's last name?",
       options:[
         {
-          text:'Correct option.',
+          text:'Fisher',
+          answer:false
+        },
+        {
+          text:'Organa',
           answer:true
         },
         {
-          text:'Incorrect option.',
+          text:'Amidala',
           answer:false
         },
         {
-          text:'Incorrect option',
+          text:'Antilles',
           answer:false
-        }
+        },
       ]
     },
     'cid5':{
       id:'cid5',
       multipleChoice:false,
-      question:"Question five?",
+      question:"Which bounty hunter did Han Solo kill in 'Episode IV: A New Hope'?",
       options:[
         {
-          text:'Correct option.',
+          text:'Greedo',
           answer:true
         },
         {
-          text:'Incorrect option.',
+          text:'Bossk',
           answer:false
         },
         {
-          text:'Incorrect option',
+          text:'Nien Numb',
           answer:false
         },
         {
-          text:'Incorrect option',
+          text:'Bobba Fett',
           answer:false
         },
         {
@@ -161,7 +162,30 @@ export default  {
         }
 
       ]
-    }
+    },
+    'cid6':{
+      id:'cid6',
+      multipleChoice:false,
+      question:"What does the ‘TIE’ in TIE fighter stand for?",
+      options:[
+        {
+          text:'Turbo Induction Encabulator',
+          answer:false
+        },
+        {
+          text:'Twin Ion Engine',
+          answer:true
+        },
+        {
+          text:'Thermal Inverse Engine',
+          answer:false
+        },
+        {
+          text:'Techno Incantho Envulcanator',
+          answer:false
+        },
+      ]
+    },
   },
   scores:{
 

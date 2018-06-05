@@ -25,5 +25,4 @@ export function addCard(deckId, cardId) {
     deckId,
     cardId
   };
-
 }

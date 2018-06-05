@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View, StyleSheet, Easing} from 'react-native';
+import {View, Easing} from 'react-native';
 import FlipView from './FlipView';
 import {Text, Divider} from 'react-native-elements';
 import * as colors from '../util/colors';
-import {setAnswerToCorrect} from '../actions';
+import {setAnswerToCorrect} from '../actions/activeDeck';
 import {CardFooter, OvalButton} from './ui';
+import sharedStyles from './styles'
 
 class Card extends React.Component {
   state = {
@@ -15,7 +16,6 @@ class Card extends React.Component {
 
   setAnswer(result) {
     const cardId = this.props.card.id;
-
     this.setState({ answer: result });
     //update the answer to be correct in the active deck
     if (result === 'correct') {
@@ -29,9 +29,9 @@ class Card extends React.Component {
 
   cardFront(card) {
     return (
-      <View style={styles.cardContainer}>
-        <View style={styles.top}>
-          <Text style={styles.title}>{card.question}</Text>
+      <View style={sharedStyles.cardContainer}>
+        <View style={{flex:1}}>
+          <Text style={sharedStyles.questionText}>{card.question}</Text>
         </View>
         <OvalButton
           title='Flip'
@@ -43,27 +43,25 @@ class Card extends React.Component {
   }
 
   cardBack(card) {
-    debugger;
-    console.log(this.state.answer);
     return (
-      <View style={styles.cardContainer}>
-        <View style={styles.top}>
-          <Text style={styles.title}>{card.question}</Text>
-          <Divider style={{ marginVertical: 10 }}/>
-          <Text style={styles.subtitle}>Correct answers:</Text>
+      <View style={sharedStyles.cardContainer}>
+        <View style={{flex:1}}>
+          <Text style={sharedStyles.questionText}>{card.question}</Text>
+          <Divider style={sharedStyles.divider}/>
+          <Text style={sharedStyles.subtitle}>Correct answers:</Text>
           {card.options.map((o, i) => {
             if (o.answer) {
               return (
                 <View key={i}>
-                  <Text  style={styles.normal}> {o.text}</Text>
+                  <Text  style={sharedStyles.normalText}> {o.text}</Text>
                 </View>
               );
             }
           })}
         </View>
 
-        <View style={styles.bottom}>
-          <Text style={styles.normal }>Was your guess correct or incorrect?</Text>
+        <View >
+          <Text style={sharedStyles.normalText }>Was your guess correct or incorrect?</Text>
           <View style={{ flexDirection: 'row' }}>
             <OvalButton
               onPress={() => this.setAnswer('correct')}
@@ -103,37 +101,6 @@ class Card extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    marginVertical: 20,
-    marginHorizontal: 10,
-    padding: 20,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: colors.disabled,
-    backgroundColor: '#fff'
-  },
-  top: {
-    flex: 1
-  },
-  title: {
-    textAlign: 'center',
-    color: colors.secondaryText,
-    fontSize: 22
-  },
-  subtitle: {
-    textAlign: 'center',
-    color: colors.primary,
-    fontSize: 18
-  },
-  normal: {
-    textAlign: 'center',
-    color: colors.secondaryText
-  }
-});
 
 function mapStateToProps({ scores, activeDeck }) {
   return { scores, activeDeck };

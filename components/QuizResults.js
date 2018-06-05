@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, BackHandler, StyleSheet} from 'react-native';
-import {Card, Text, Badge,Icon} from 'react-native-elements';
+import {View, BackHandler} from 'react-native';
+import {Card, Text, Badge, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {MaterialIcons} from '@expo/vector-icons';
 import * as colors from '../util/colors';
-import {ResultsTitle} from './ui';
+import {CardTitle, ResultsTitle} from './ui';
+import sharedStyles from './styles';
 
 class QuizResults extends React.Component {
   correctCount = 0;
@@ -66,72 +67,32 @@ class QuizResults extends React.Component {
     const answers = this.props.activeDeck.answers;
     const deckName = this.props.activeDeck.deckName;
     return (
-      <View style={styles.container}>
+      <View style={sharedStyles.container}>
         <Card
-          title={<ResultsTitle deckName={deckName}/>}
-          containerStyle={styles.card}
+          title={<CardTitle info='Results for' title={deckName}/>}
+          containerStyle={sharedStyles.card}
         >
-
-            <View>
-              {Object.keys(answers).map((k, i) => (
-                <View key={k}>
-                  <Text style={styles.centered}>
-                    Question {i + 1}: {this.isCorrect(answers[k])
-                    ? <Text style={{ color: colors.primary }}>Correct</Text>
-                    : <Text style={{ color: colors.error }}>Incorrect</Text>}
-                  </Text>
-                </View>
-              ))}
-            </View>
-            <Text style={{
-              textAlign:'center',
-              marginVertical:10,
-              fontSize:18,
-              color:colors.darkPrimary
-            }}
-            >Total Correct Answers: {this.correctCount} of {this.totalCount}
-            </Text>
-
-            <Badge
-              containerStyle={{
-                marginTop: 20,
-                backgroundColor: this.getBadgeColor()
-              }}
-            >
-              <Text h4 style={{ color: colors.lightText }}>Score: {this.getScore()}%</Text>
-            </Badge>
-
-
+          <View>
+            {Object.keys(answers).map((k, i) => (
+              <View key={k}>
+                <Text style={sharedStyles.normalText}>
+                  Question {i + 1}: {this.isCorrect(answers[k])
+                  ? <Text style={{ color: colors.primary }}>Correct</Text>
+                  : <Text style={{ color: colors.error }}>Incorrect</Text>}
+                </Text>
+              </View>
+            ))}
+          </View>
+          <Text style={sharedStyles.subtitle}
+          >Total Correct Answers: {this.correctCount} of {this.totalCount}
+          </Text>
+          <Badge containerStyle={{ marginTop: 20, backgroundColor: this.getBadgeColor() }}>
+            <Text h4 style={{ color: colors.lightText }}>Score: {this.getScore()}%</Text>
+          </Badge>
         </Card>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  card: {
-    marginHorizontal: 0,
-    borderRadius: 15
-  },
-  container: {
-    padding: 20,
-    flex: 1,
-    backgroundColor: colors.lightText,
-    alignItems: 'stretch'
-  },
-  title: {
-    textAlign: 'center',
-    color: colors.darkPrimary
-  },
-  subtitle: {
-    textAlign: 'center',
-    color: colors.primary
-  },
-  centered: {
-    textAlign: 'center'
-  }
-
-});
 
 export default connect(({ activeDeck }) => ({ activeDeck }))(QuizResults);

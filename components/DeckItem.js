@@ -3,6 +3,7 @@ import * as colors from '../util/colors';
 import {Text, Card, Icon} from 'react-native-elements';
 import {BadgeCustom} from './ui';
 import {View, TouchableOpacity} from 'react-native';
+import sharedStyles from './styles'
 
 export default class DeckItem extends React.Component {
   render() {
@@ -11,24 +12,17 @@ export default class DeckItem extends React.Component {
     const cardCount = this.props.cardCount;
 
     return (
-      <Card containerStyle={{
-        marginHorizontal: 0,
-        borderRadius: 15
-      }}>
+      <Card containerStyle={sharedStyles.card}>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
             <TouchableOpacity onPress={() => this.props.navigate('DeckDetails', { deck: deckId })}>
-              <Text style={{ color: colors.darkPrimary, fontSize: 18, fontWeight: 'bold' }}>{deckName}</Text>
-              <View style={{
-                flexDirection: 'row',
-                marginTop: 10
-              }}>
-                <Text style={{ color: colors.secondaryText }}>Contains </Text>
+              <Text style={sharedStyles.h2}>{deckName}</Text>
+              <View style={{flexDirection: 'row',marginTop: 10}}>
+                <Text style={sharedStyles.normalText}>Contains </Text>
                 <BadgeCustom value={cardCount}/>
-                <Text style={{ color: colors.secondaryText }}> cards</Text>
+                <Text style={sharedStyles.normalText}> cards</Text>
               </View>
             </TouchableOpacity>
-
           </View>
           <View>
             <Icon

@@ -1,13 +1,14 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { View} from 'react-native';
+import {Text} from 'react-native-elements';
 import {connect} from 'react-redux';
+import {Pages} from 'react-native-pages';
 import CardQuiz from './CardQuiz';
 import Card from './Card';
-import {Pages} from 'react-native-pages';
-import {initActiveDeck} from '../actions';
-import {Text} from 'react-native-elements';
+import {initActiveDeck} from '../actions/activeDeck';
 import * as colors from '../util/colors';
 import {MainButton} from './ui';
+import sharedStyles from './styles'
 
 class DeckPractice extends React.Component {
 
@@ -30,8 +31,8 @@ class DeckPractice extends React.Component {
     const cards = this.props.deckCards;
     const isQuizMode = this.props.isQuizMode;
     return (
-      <View style={styles.container}>
-        <Text h4 style={styles.title}>{deck.name}</Text>
+      <View style={sharedStyles.container}>
+        <Text style={sharedStyles.h1}>{deck.name}</Text>
         <Pages
           indicatorPosition='top'
           indicatorColor={colors.primary}
@@ -48,29 +49,11 @@ class DeckPractice extends React.Component {
           title={'SUBMIT'}
           onPress={() => this.handleSubmit()}
         />
-
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    flex: 1,
-    backgroundColor: colors.lightText,
-    alignItems: 'stretch'
-  },
-  title: {
-    textAlign: 'center',
-    color: colors.darkPrimary
-  },
-  subtitle: {
-    textAlign: 'center',
-    color: colors.primary
-  }
-
-});
 
 function mapStateToProps({ cards }, ownProps) {
   const deck = ownProps.navigation.getParam('deck');

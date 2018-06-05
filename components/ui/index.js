@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Badge, Divider, CheckBox, Icon} from 'react-native-elements';
+import {Button, Badge, Divider, Icon} from 'react-native-elements';
 import * as colors from '../../util/colors';
 import {View, Text, TouchableOpacity} from 'react-native';
+import sharedStyles from '../styles';
 
 export function MainButton(props) {
   return (
@@ -34,7 +35,6 @@ export function TextDivider(props) {
     </View>
   );
 }
-
 
 export class OvalButton extends React.Component {
   static defaultProps = {
@@ -70,40 +70,33 @@ export class OvalButton extends React.Component {
 }
 
 export function CardFooter(props) {
-
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
       <Icon
         type='entypo'
         name='chevron-thin-left'
-        color={props.index === 0 ? 'transparent' : colors.secondaryText}
+        color={props.index === 0 ? 'transparent' : colors.disabled}
       />
-      <Text style={{
-        textAlign: 'center',
-        fontStyle: 'italic',
-        color: colors.secondaryText
-      }}
-      >
+      <Text style={sharedStyles.hintText}>
         Card {props.index + 1} of {props.pages}
       </Text>
       <Icon
         type='entypo'
         name='chevron-thin-right'
-        color={props.index === props.pages - 1 ? 'transparent' : colors.secondaryText}
+        color={props.index === props.pages - 1 ? 'transparent' : colors.disabled}
       />
     </View>
   );
 
 }
 
-export function ResultsTitle(props) {
-  return (
-    <View style={{ justifyContent: 'center' }}>
-    <Text style={{ textAlign: 'center', fontSize:20,color:colors.secondaryText }}>Results for </Text>
-    <Text style={{ textAlign: 'center', color: colors.primary,fontSize:22,fontWeight:'bold' }}>{props.deckName}</Text>
-    <Divider style={{marginVertical:10}}/>
-  </View>);
-}
+export const CardTitle = (props) => (
+  <View>
+    <Text style={sharedStyles.h3}>{props.info}</Text>
+    <Text style={sharedStyles.h2center}>{props.title}</Text>
+    <Divider style={sharedStyles.divider}/>
+  </View>
+);
 
 
 

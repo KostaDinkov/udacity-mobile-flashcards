@@ -1,13 +1,16 @@
 import React from 'react';
-import {View, KeyboardAvoidingView, StyleSheet, ScrollView} from 'react-native';
-import Toast from 'react-native-simple-toast';
-import {CheckBox, Button, Card, Input, Text, Divider} from 'react-native-elements';
 import {connect} from 'react-redux';
+import {View, KeyboardAvoidingView, ScrollView} from 'react-native';
+import {CheckBox, Button, Card, Input, Text} from 'react-native-elements';
+import Toast from 'react-native-simple-toast';
 import {generateId} from '../util/helpers';
 import {addNewCard} from '../actions/cards';
 import {addCard} from '../actions/decks';
 import * as colors from '../util/colors';
-import {MainButton} from './ui';
+import {MainButton,CardTitle} from './ui';
+import sharedStyles from './styles';
+
+
 
 class AddNewCard extends React.Component {
   state = {
@@ -16,18 +19,16 @@ class AddNewCard extends React.Component {
   };
 
   static navigationOptions = {
-    title: 'Add New Question'
+    title: 'Add New Card'
   };
 
   updateOptionText(i, optionText) {
-
     let options = this.state.options;
     options[i] = { ...options[i], text: optionText };
     this.setState({ options });
   }
 
   toggleOptionCorrect(i) {
-
     let options = this.state.options;
     options[i] = { ...options[i], answer: !options[i].answer };
     this.setState({ options });
@@ -80,23 +81,16 @@ class AddNewCard extends React.Component {
     const deck = this.props.navigation.getParam('deck');
 
     return (
-      <KeyboardAvoidingView style={styles.container} enabled>
+      <KeyboardAvoidingView style={sharedStyles.container} enabled>
         <Card
-          title=
-            {
-              <View>
-                <Text style={{ textAlign:'center',fontSize: 18, color: colors.secondaryText }}>Current Deck</Text>
-                <Text style={{ textAlign:'center', fontSize: 22, color: colors.darkPrimary, fontWeight: 'bold' }}>{deck.name}</Text>
-                <Divider style={{marginVertical:10}}/>
-              </View>
-            }
-          containerStyle={styles.card}
+          title={<CardTitle info='Current Deck' title={deck.name}/>}
+          containerStyle={sharedStyles.card}
         >
           <ScrollView
-            style={{ maxHeight: '70%' }}>
+            style={{ maxHeight: '60%' }}>
             <Input
               label={'Question:'}
-              containerStyle={{ width: '100%' }}
+              containerStyle={{ width: '100%', flex: 1 }}
               placeholder='Enter question text here...'
               onChangeText={(question) => this.setState({ question })}
               value={this.state.question}
@@ -106,7 +100,7 @@ class AddNewCard extends React.Component {
                 return (
                   <View key={i} style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Input
-                      containerStyle={{ width: '100%', flex: 6 }}
+                      containerStyle={{ width: '100%', flex: 1 }}
                       value={this.state.options[i].text}
                       placeholder={`Option ${i + 1} text here`}
                       onChangeText={(optionText) => this.updateOptionText(i, optionText)}
@@ -117,8 +111,8 @@ class AddNewCard extends React.Component {
                         this.toggleOptionCorrect(i);
                       }}
                       center
-                      checkedColor={colors.accentColor}
-                      containerStyle={styles.checkBoxContainer}
+                      checkedColor={colors.primary}
+                      containerStyle={sharedStyles.checkBoxSimple}
                     />
                     <Button
                       clear
@@ -135,7 +129,7 @@ class AddNewCard extends React.Component {
               })
             }
           </ScrollView>
-          <Text style={styles.hintText}>Hint - Check the checkboxes for the options that are correct answers to the question</Text>
+          <Text style={sharedStyles.hintText}>Hint - Check the checkboxes for the options that are correct answers to the question</Text>
           <MainButton
             title='Add Option'
             onPress={() => this.addOption()}
@@ -149,38 +143,5 @@ class AddNewCard extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  card: {
-    marginHorizontal: 0,
-    borderRadius: 15
-  },
-  cardTitle: {
-    color: colors.darkPrimary
-  },
-  container: {
-    padding: 20,
-    flex: 1,
-    backgroundColor: colors.lightText
-
-  },
-  hintText: {
-    fontSize: 16,
-    fontStyle: 'italic',
-    color: colors.disabled,
-    marginVertical: 10
-  },
-  checkBoxContainer: {
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    margin: 0,
-    padding: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    flex: 1,
-    justifyContent: 'center'
-  }
-});
 
 export default connect(({ cards }) => ({ cards }))(AddNewCard);

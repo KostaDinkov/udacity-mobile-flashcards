@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {Text, Overlay} from 'react-native-elements';
 import {connect} from 'react-redux';
+import {View, ScrollView} from 'react-native';
+import {Text} from 'react-native-elements';
 import {deleteDeck} from '../actions/decks';
-import * as colors from '../util/colors';
 import {MainButton} from './ui';
 import DeckItem from './DeckItem';
+import sharedStyles from './styles'
 
 class DeckList extends React.Component {
 
@@ -19,11 +19,10 @@ class DeckList extends React.Component {
   }
 
   render() {
-
     const decks = this.props.decks;
     return (
-      <View style={styles.container}>
-        <Text h4 style={styles.title}>Choose a quiz to practice</Text>
+      <View style={sharedStyles.container}>
+        <Text h4 style={sharedStyles.h1}>Choose a quiz to practice</Text>
         <ScrollView>
           {Object.keys(decks).map(id => (
             <DeckItem
@@ -35,29 +34,14 @@ class DeckList extends React.Component {
               navigate={this.props.navigation.navigate.bind(this)}
             />))}
         </ScrollView>
-
         <MainButton
           title='Create New Deck'
           onPress={() => this.props.navigation.navigate('CreateNewDeck')}
         />
-
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    flex: 1,
-    backgroundColor: colors.lightText,
-    alignItems: 'stretch'
-  },
-  title: {
-    textAlign: 'center',
-    color: colors.darkPrimary
-  }
-});
 
 function mapStateToProps({ decks }) {
   return { decks };
