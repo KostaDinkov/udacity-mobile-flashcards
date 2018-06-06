@@ -1,3 +1,38 @@
+#Mobile Flashcards
+
+The Mobile Flashcards project is a React Native application that enables users to create flash cards and quizzes that can help with the learning and remembering of chosen topics.This is the final project assignment for the Udacitys React Nanodegree program.
+
+####App Features
+* Create new decks that can contain flash cards
+* Delete existing decks
+* Add new flash cards to existing decks
+    * Add a question to the card
+    * Add answers to the cards
+    * Mark which of the answers are the correct answers for the question (Quiz Mode)
+    * Add as many answers as you want, but no less than two, of which one must be marked as the correct answer
+* Practice the existing decks
+    * There are 2 modes for practice
+    * Quiz mode - check the correct answers from the list of all answers
+    * Flash cards mode - See the question, think of an answer, flip the card, see the correct answer and mark your guess as correct or incorrect
+* View a summary for the practice results and a final score 
+* Every day a local notification will remind the user to practice
+
+
+![Screenshot](./docs/screenshots/1.png)
+![Screenshot](./docs/screenshots/2.png)
+![Screenshot](./docs/screenshots/3.png)
+![Screenshot](./docs/screenshots/4.png)
+![Screenshot](./docs/screenshots/5.png)
+![Screenshot](./docs/screenshots/6.png)
+
+#### Installation
+In order to install and run the project, you will need node.js, npm or yarn on your machine.
+* Clone or download the repository to a folder of your choosing
+* Navigate to the repository folder
+* From a command line interface run `yarn install` or `npm install`
+* After the installation is complete type `yarn start` or `npm start`
+* The project will start in a development mode with instructions how to proceed.
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
