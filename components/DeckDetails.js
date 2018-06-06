@@ -33,6 +33,7 @@ class DeckDetails extends React.Component {
   };
 
   handlePractice(deck) {
+
     clearLocalNotification().then(setLocalNotification);
     this.props.navigation.navigate('DeckPractice', { deck, isQuizMode: this.state.quizMode });
   };

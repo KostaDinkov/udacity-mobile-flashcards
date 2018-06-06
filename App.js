@@ -8,7 +8,7 @@ import {clearLocalNotification, setLocalNotification} from './util/helpers';
 export default class App extends React.Component {
 
   componentDidMount(){
-    clearLocalNotification()
+    setLocalNotification();
   }
 
   render() {
