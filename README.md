@@ -32,6 +32,12 @@ In order to install and run the project, you will need node.js, npm or yarn on y
 * After the installation is complete type `yarn start` or `npm start`
 * The project will start in a development mode with instructions how to proceed.
 
+## Testing
+The project has been tested on :
+* Android Studio Emulator (with the Expo wrapper)
+* Samsung Galaxy Note 2 (with the Expo wrapper)
+* Samsung Galaxy S9+ (with the Expo wrapper )
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).

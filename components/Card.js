@@ -34,7 +34,7 @@ class Card extends React.Component {
           <Text style={sharedStyles.questionText}>{card.question}</Text>
         </View>
         <OvalButton
-          title='Flip'
+          title='Show Answer'
           onPress={() => this.flipCard()}
         />
         <CardFooter pages={this.props.pages} index={this.props.index}/>

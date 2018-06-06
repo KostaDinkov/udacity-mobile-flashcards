@@ -45,7 +45,7 @@ class CreateNewDeck extends React.Component {
             errorMessage={null}
           />
           <MainButton
-            title='Create'
+            title='Create Deck'
             onPress={() => this.handleCreateDeck()}
           />
         </Card>

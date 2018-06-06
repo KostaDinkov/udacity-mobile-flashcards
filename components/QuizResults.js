@@ -4,7 +4,7 @@ import {Card, Text, Badge, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {MaterialIcons} from '@expo/vector-icons';
 import * as colors from '../util/colors';
-import {CardTitle, ResultsTitle} from './ui';
+import {CardTitle, MainButton, ResultsTitle} from './ui';
 import sharedStyles from './styles';
 
 class QuizResults extends React.Component {
@@ -17,24 +17,27 @@ class QuizResults extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'Quiz Results',
-    headerLeft: <Icon name="arrow-back"
-                      onPress={() => navigation.navigate('Home')}
-                      size={26}
-                      color={colors.lightText}
-                      containerStyle={{ marginLeft: 20 }}
-
-    />
+    headerLeft: null
   });
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.navigate('Home');
+      this.handleBack();
       return true;
     });
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () => false);
+  }
+
+  handleBack() {
+    this.props.navigation.navigate('Home');
+  }
+
+  handleStartOver() {
+    const deckId = this.props.activeDeck.deckId;
+    this.props.navigation.navigate('DeckDetails', { deck: deckId });
   }
 
   isCorrect(ans) {
@@ -86,9 +89,11 @@ class QuizResults extends React.Component {
           <Text style={sharedStyles.subtitle}
           >Total Correct Answers: {this.correctCount} of {this.totalCount}
           </Text>
-          <Badge containerStyle={{ marginTop: 20, backgroundColor: this.getBadgeColor() }}>
+          <Badge containerStyle={{ marginVertical: 20, backgroundColor: this.getBadgeColor() }}>
             <Text h4 style={{ color: colors.lightText }}>Score: {this.getScore()}%</Text>
           </Badge>
+          <MainButton title='Start Over' onPress={() => this.handleStartOver()}/>
+          <MainButton title='Back to Deck' onPress={() => this.handleBack()}/>
         </Card>
       </View>
     );

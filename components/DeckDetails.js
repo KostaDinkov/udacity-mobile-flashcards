@@ -64,13 +64,13 @@ class DeckDetails extends React.Component {
             />
           </View>
           <MainButton
-            title='Practice'
+            title='Start a Quiz'
             disabled={deck.cards.length < 1}
             onPress={() => this.handlePractice(deck)}
           />
           <TextDivider text='OR'/>
           <MainButton
-            title='Add Question'
+            title='Create New Question'
             onPress={() => this.props.navigation.navigate('AddQuestion', { deck })}/>
         </Card>
       </View>
