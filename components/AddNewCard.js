@@ -55,7 +55,6 @@ class AddNewCard extends React.Component {
     if (inputCheckResult === true) {
       this.props.dispatch(addNewCard(card));
       this.props.dispatch(addCard(deck.id, card.id));
-      //TODO persist the store
       this.props.navigation.navigate('DeckDetails', { deck: deck.id });
     }
     else {

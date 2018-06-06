@@ -36,7 +36,12 @@ In order to install and run the project, you will need node.js, npm or yarn on y
 The project has been tested on :
 * Android Studio Emulator (with the Expo wrapper)
 * Samsung Galaxy Note 2 (with the Expo wrapper)
-* Samsung Galaxy S9+ (with the Expo wrapper )
+* Samsung Galaxy S9+ (with the Expo wrapper, native APK )
+
+## Issues
+* Keyboard avoiding view not working as expected on the 'Add New Question' screen
+
+## Project bootstrapping
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 

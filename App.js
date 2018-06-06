@@ -8,9 +8,7 @@ import {clearLocalNotification, setLocalNotification} from './util/helpers';
 export default class App extends React.Component {
 
   componentDidMount(){
-    //TODO for production call just setLocalNotification
-    //for debugging, a local notification will appear 1 min after the app starts
-    clearLocalNotification().then(setLocalNotification);
+    clearLocalNotification()
   }
 
   render() {
