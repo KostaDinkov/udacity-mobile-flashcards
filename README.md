@@ -2,7 +2,7 @@
 
 The Mobile Flashcards project is a React Native application that enables users to create flash cards and quizzes that can help with the learning and remembering of chosen topics.This is the final project assignment for the Udacitys React Nanodegree program.
 
-##App Features
+## App Features
 * Create new decks that can contain flash cards
 * Delete existing decks
 * Add new flash cards to existing decks
