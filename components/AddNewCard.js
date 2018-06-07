@@ -58,7 +58,7 @@ class AddNewCard extends React.Component {
       this.props.navigation.navigate('DeckDetails', { deck: deck.id });
     }
     else {
-      Toast.show(inputCheckResult, Toast.LONG);
+      Toast.show(inputCheckResult);
     }
 
   }

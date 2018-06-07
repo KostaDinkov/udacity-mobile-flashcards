@@ -1,6 +1,4 @@
-export const CREATE_NEW_DECK = 'CREATE_NEW_DECK';
-export const ADD_CARD = 'ADD_CARD';
-export const DELETE_DECK= 'DELETE_DECK';
+import {ADD_CARD, CREATE_NEW_DECK, DELETE_DECK} from './actionTypes';
 
 export function createNewDeck(deckId, deckName, deckCreated) {
 

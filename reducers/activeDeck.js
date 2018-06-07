@@ -1,4 +1,4 @@
-import {INIT_ACTIVE_DECK, SET_ANSWER_CORRECT, TOGGLE_CHECKBOX} from '../actions/activeDeck';
+import {INIT_ACTIVE_DECK, SET_ANSWER_CORRECT, TOGGLE_CHECKBOX} from '../actions/actionTypes';
 
 export default function activeDeck(state = {}, action) {
   switch (action.type) {

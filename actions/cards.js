@@ -1,4 +1,4 @@
-export const ADD_NEW_CARD = 'ADD_NEW_CARD';
+import {ADD_NEW_CARD} from './actionTypes';
 
 export function addNewCard(card){
   return{

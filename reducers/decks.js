@@ -1,4 +1,4 @@
-import {ADD_CARD, CREATE_NEW_DECK, DELETE_DECK} from '../actions/decks';
+import {ADD_CARD, CREATE_NEW_DECK, DELETE_DECK} from '../actions/actionTypes';
 import sampleData from '../util/sampleData';
 
 const initialData = sampleData.decks;

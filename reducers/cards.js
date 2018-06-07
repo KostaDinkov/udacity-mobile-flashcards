@@ -1,4 +1,4 @@
-import {ADD_NEW_CARD} from '../actions/cards';
+import {ADD_NEW_CARD} from '../actions/actionTypes';
 import sampleData from '../util/sampleData'
 
 const initialData = sampleData.cards;

@@ -2,14 +2,13 @@ import React from 'react';
 import {View, BackHandler} from 'react-native';
 import {Card, Text, Badge, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
+import { StackActions } from 'react-navigation';
 import {MaterialIcons} from '@expo/vector-icons';
 import * as colors from '../util/colors';
 import {CardTitle, MainButton, ResultsTitle} from './ui';
 import sharedStyles from './styles';
 
 class QuizResults extends React.Component {
-  correctCount = 0;
-  totalCount = 0;
 
   getScore() {
     return ((this.correctCount / this.totalCount) * 100).toFixed(1);
@@ -17,12 +16,18 @@ class QuizResults extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'Quiz Results',
-    headerLeft: null
+    headerLeft: <Icon name="home"
+                      onPress={() => navigation.navigate('Home')}
+                      size={26}
+                      color={colors.lightText}
+                      containerStyle={{ marginLeft: 20 }}
+
+    />
   });
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      this.handleBack();
+      this.props.navigation.navigate('Home');
       return true;
     });
   }
@@ -32,12 +37,19 @@ class QuizResults extends React.Component {
   }
 
   handleBack() {
-    this.props.navigation.navigate('Home');
+    const deck = this.props.activeDeck.deck;
+    this.props.navigation.navigate('DeckDetails', { deck: deck.id });
   }
 
   handleStartOver() {
-    const deckId = this.props.activeDeck.deckId;
-    this.props.navigation.navigate('DeckDetails', { deck: deckId });
+    const deck = this.props.activeDeck.deck;
+    const isQuizMode = this.props.activeDeck.isQuizMode;
+    const resetAction = StackActions.push({
+      routeName:'DeckPractice',
+      params:{deck,isQuizMode}
+    });
+
+    this.props.navigation.dispatch(resetAction);
   }
 
   isCorrect(ans) {
@@ -67,8 +79,11 @@ class QuizResults extends React.Component {
   }
 
   render() {
+    this.correctCount = 0;
+    this.totalCount = 0;
+    debugger;
     const answers = this.props.activeDeck.answers;
-    const deckName = this.props.activeDeck.deckName;
+    const deckName = this.props.activeDeck.deck.name;
     return (
       <View style={sharedStyles.container}>
         <Card

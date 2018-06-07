@@ -1,5 +1,5 @@
 import React from 'react';
-import { View} from 'react-native';
+import {View} from 'react-native';
 import {Text} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {Pages} from 'react-native-pages';
@@ -8,7 +8,7 @@ import Card from './Card';
 import {initActiveDeck} from '../actions/activeDeck';
 import * as colors from '../util/colors';
 import {MainButton} from './ui';
-import sharedStyles from './styles'
+import sharedStyles from './styles';
 
 class DeckPractice extends React.Component {
 
@@ -19,7 +19,9 @@ class DeckPractice extends React.Component {
   componentWillMount() {
     const cards = this.props.deckCards;
     const deck = this.props.deck;
-    this.props.dispatch(initActiveDeck(cards, deck));
+    const isQuizMode = this.props.isQuizMode;
+    this.props.dispatch(initActiveDeck(cards, deck, isQuizMode));
+    console.log('entered deckPractice');
   }
 
   handleSubmit() {
@@ -54,8 +56,8 @@ class DeckPractice extends React.Component {
   }
 }
 
-
 function mapStateToProps({ cards }, ownProps) {
+
   const deck = ownProps.navigation.getParam('deck');
   const isQuizMode = ownProps.navigation.getParam('isQuizMode');
   const deckCards = Object.keys(cards)

@@ -1,13 +1,12 @@
-export const INIT_ACTIVE_DECK = 'INIT_ACTIVE_DECK';
-export const TOGGLE_CHECKBOX = 'TOGGLE_CHECKBOX';
-export const SET_ANSWER_CORRECT = 'SET_ANSWER_CORRECT';
+import {INIT_ACTIVE_DECK, SET_ANSWER_CORRECT, TOGGLE_CHECKBOX} from './actionTypes';
 
-export function initActiveDeck(cards, deck) {
+export function initActiveDeck(cards, deck, isQuizMode) {
+
   const activeDeck = {};
   activeDeck.cards = cards;
+  activeDeck.isQuizMode = isQuizMode;
   activeDeck.answers = {};
-  activeDeck.deckName=deck.name;
-  activeDeck.deckId=deck.id;
+  activeDeck.deck=deck;
   //TODO make more readable - convert to for loop for performance
   cards.forEach(card => activeDeck.answers[card.id] = Object.assign({}, card.options.map((o) => ({
     isChecked: false,
